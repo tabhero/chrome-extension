@@ -1,0 +1,23 @@
+{
+    "manifest_version": 2,
+    "name": "TabHero",
+    "version": "0.1.0",
+    "description": "A chrome extension for managing your tabs",
+    "permissions": [
+        "activeTab",
+        "declarativeContent",
+        "storage",
+        "tabs",
+        "unlimitedStorage"
+    ],
+    "browser_action": {
+        "default_popup": "index.html"
+    },
+    "commands": {
+        "_execute_browser_action": {
+            "suggested_key": {
+                "default": "Alt+Shift+T"
+            }
+        }
+    }
+}
