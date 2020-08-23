@@ -1,8 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap');
-
 body {
-    font-family: var(--font-family);
-
     /* this is what determines 1rem */
     font-size: 14px;
 }
