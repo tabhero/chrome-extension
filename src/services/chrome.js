@@ -60,6 +60,9 @@ export const registerOnTabUpdate = (handler) => {
         })
     }, 1500);
 
+    // Alternatives:
+    // https://developer.chrome.com/extensions/background_pages#filters
+    // https://developer.chrome.com/extensions/webNavigation#event-onCompleted
     /**
      * WARNING: onUpdated seems to emit 4 to 5 events when a tab changes, each in which changeInfo.status is supposed to be either "unloaded", "loading", or "complete"
      * BUT in reality changeInfo.status is undefined in most of those events.
