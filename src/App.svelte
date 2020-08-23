@@ -1,30 +1,69 @@
 <script>
-	export let name;
+    import { onMount, onDestroy } from 'svelte';
+    import { get } from 'svelte/store';
+    import { Router, Route } from "svelte-routing";
+    import { TopBar } from '@tabhero/svelte-components';
+
+    import Main from './pages/Main.svelte';
+    import OpenTabs from './pages/OpenTabs.svelte';
+
+    import { currentTabTags, currentTabLink } from './store.js';
+    import { getCurrentTab, registerOnTabUpdate } from './services/chrome';
+    import { initTagsState, tagsStateToStorage } from './sync';
+
+    onMount(async () => {
+        const currentTab = await getCurrentTab();
+        const { tags, currentLink } = await initTagsState(currentTab);
+        currentTabTags.set(tags);
+        currentTabLink.set(currentLink);
+
+        const removeListener = registerOnTabUpdate(async (newTab) => {
+            const { tags, currentLink } = await initTagsState(newTab);
+            currentTabTags.set(tags);
+            currentTabLink.set(currentLink);
+        });
+
+        return async () => {
+            removeListener();
+        };
+    });
+
+    const unsubscribe = currentTabTags.subscribe(async tags => {
+        await tagsStateToStorage(get(currentTabTags), get(currentTabLink));
+    });
+
+    onDestroy(unsubscribe);
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
-
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
+    .container {
+        /* Max width and height of popup: https://stackoverflow.com/a/47570170 */
+        width: 310px;
+        height: 540px;
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
+        display: flex;
+        flex-direction: column;
+    }
 
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
+    .body {
+        flex-grow: 1;
+
+        /* the app body has a border. Hence, overflow at this layer, not at the app container layer */
+        overflow: auto;
+
+        border: .1rem solid var(--col-primary);
+        border-top: 0;
+        border-bottom-left-radius: .5rem;
+        border-bottom-right-radius: .5rem;
+    }
 </style>
+
+<div class="container">
+    <TopBar state="" user="" />
+    <div class="body">
+        <Router>
+            <Route path="/index.html" component={Main} />
+            <Route path="/open-tabs" component={OpenTabs} />
+        </Router>
+    </div>
+</div>

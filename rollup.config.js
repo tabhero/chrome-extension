@@ -4,6 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import postcss from 'rollup-plugin-postcss';
+import injectProcessEnv from 'rollup-plugin-inject-process-env';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -74,6 +75,10 @@ export default {
 			inject: {
 				insertAt: 'top'
 			}
+		}),
+
+		injectProcessEnv({
+			NODE_ENV: 'production',
 		}),
 	],
 	watch: {
