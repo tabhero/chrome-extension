@@ -17,7 +17,11 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
-    "sirv-cli": "^1.0.0"
+    "@tabhero/svelte-components": "^0.4.1",
+    "nanoid": "^3.1.12",
+    "normalize-url": "^5.1.0",
+    "sirv-cli": "^1.0.0",
+    "svelte-routing": "^1.4.2"
   },
   "license": "GPL-3.0-or-later"
 }
