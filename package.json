@@ -5,16 +5,27 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public"
+    "start": "sirv public",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.4",
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
+    "@storybook/addon-actions": "^6.0.16",
+    "@storybook/addon-essentials": "^6.0.16",
+    "@storybook/addon-links": "^6.0.16",
+    "@storybook/svelte": "^6.0.16",
+    "babel-loader": "^8.1.0",
+    "react-is": "^16.13.1",
     "rollup": "^2.3.4",
     "rollup-plugin-livereload": "^1.0.0",
+    "rollup-plugin-postcss": "^3.1.5",
     "rollup-plugin-svelte": "^5.0.3",
     "rollup-plugin-terser": "^7.0.0",
-    "svelte": "^3.0.0"
+    "svelte": "^3.24.1",
+    "svelte-loader": "^2.13.6"
   },
   "dependencies": {
     "@tabhero/svelte-components": "^0.4.1",
