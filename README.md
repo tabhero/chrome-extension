@@ -43,7 +43,11 @@ The app would not work in development through `npm run dev`, because this will s
 
 1. [ ] Visual element showing whether the app is synced with local storage or synced with the backend, like how google docs does it.
 2. [ ] In AddTag bar, even when a tag has been added, it shows up in the search results. Either we don't show them (but then we'd have to give user feedback somehow) or we let the user either 1) see a non-clickable "already added" prompt or 2) see a "remove tag" prompt, making the entire component a Add/Remove Tag component
-3. [ ] In Save All Open Tabs, let the user 1) select which tabs to save to the collection and 2) choose if they wanna close all the tabs that are saved to the collection (useful if they might wanna save a tab to multiple collections)
+3. [ ] In Save All Open Tabs, let the user
+    1. select which tabs to save to the collection
+    2. choose if they wanna close all the tabs that are saved to the collection (useful if they might wanna save a tab to multiple collections)
+    3. see the tabs grouped into the window they're in
+    4. go the desired opened tab by clicking on it
 4. [ ] In universal search flow, we currently can show all links assoc. with one tag. Provide a way to see all links assoc. with multiple tags.
 5. [ ] "Save To Open Tabs" button should use a different UI element to indicate navigation. Currently, its behaviour is inconsistent with the behaviour "Merge" and "Save" buttons have, despite all using the same UI element.
 6. [ ] Show a list of tags assoc with the currently active browser tab separately from the list of all tags. Useful for quick removal.
