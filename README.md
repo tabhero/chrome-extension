@@ -30,6 +30,10 @@ The app would not work in development through `npm run dev`, because this will s
 - The app popup exists within the context of a single chrome tab. On switching chrome tabs, the popup should backup the state into the chrome storage and then a new app popup should be instantiated, loading data associated with the new tab from the storage.
 - When a browser tab changes, only the ID of the associated link in the DB should remain the same. Other fields like favicon, title and other web resources would get the lastest value from the new tab. This would result in an auto-update of the fields of that link. So when the title/favicon of a website is changed, our DB gets that change. Also, when a tab changes, we use the tab's url to find the link having that url in the DB. Because of this, the URL would automatically also persist like the ID.
 - Links get autocleaned, but tags and collections don't. This means when a link is no longer associated with any tag or collection, it gets deleted from the DB. But if a tag or collection is no longer associated with any link, it remains in the DB.
+- There is one backend and multiple frontends. The backend state represents the persistent state (there are intermediate persistent states, like chrome.local.storage, but ignore those for now). For each frontend, the frontend state will be initialised from the backend state on startup. For each write operation to the frontend state, the backend state will be updated to match the frontend state. As a result of this model:
+    - The frontend state is not reactive. For example, if we change the state in frontend X, that state change will not be reflected in frontend Y until Y is restarted.
+    - We don't have to handle state conflicts between the frontend and the backend. The frontend state takes precedence and overwrites the backend state.
+    - When frontend X is switched off, there is no guarantee that on the next startup, the state of X will be the same as before switching off. This is because frontend Y might have overwritten the backend state that X is initialised from. We can have this guarantee only for the very last frontend that wrote to the backend.
 
 ## Anomalies
 
@@ -49,6 +53,12 @@ The app would not work in development through `npm run dev`, because this will s
 - Unique IDs use the `nanoid` npm package, which unfortunately doesn't comply with rollup's bundling conventions. So we use a workaround, [rollup-plugin-inject-process-env](https://www.npmjs.com/package/rollup-plugin-inject-process-env) to make it work. A discussion on this can be found on [rollup/issues#487](https://github.com/rollup/rollup/issues/487).
 - `rollup-plugin-inject-process-env` breaks the functionality of `rollup-plugin-postcss` when placed before `rollup-plugin-postcss` in the Rollup plugin pipeline. Don't know why this happens. We need `rollup-plugin-postcss` so we can use the `@tabhero/svelte-components` package. Could file a bug report on `rollup-plugin-inject-process-env` or use a different plugin for the same purpose, or put up with it for now.
 - The stories of the page views broke because the page views import `svelte-routing`'s `Link` component, which can't be rendered without the existence of `svelte-routing`'s `Router` and `Route` components higher up in the component tree. So we'd need to wrap these stories as well in `Router` and `Route`, but we can't do that with the current storybook syntax for Svelte. The Svelte storybook team plans to support the Svelte syntax in stories (mentioned [here](https://www.npmjs.com/package/@storybook/svelte)), and there's a [Storybook PR #7682](https://github.com/storybookjs/storybook/pull/7682) regarding this same goal. For now, a workaround would be to make more svelte components that would wrap the actual components we're making stories of, and use those wrappers in the stories. An example of that is given [here](https://github.com/storybookjs/storybook/tree/next/examples/svelte-kitchen-sink). There's an alternative to storybook meant specifically for Svelte components, [svench](https://github.com/rixo/svench), that's made by the same person who raised the PR. The PR seems to have been dropped in favour of this, but it still looks pretty experimental for now.
+
+## Challenges
+
+- Handling state conflicts between multiple frontends
+    - Each frontend is aware of only the backend state
+- Aiming for small reads/writes to persistent storage, rather than the bulk version we're doing in the chrome extension right now.
 
 ## Extras
 
