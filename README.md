@@ -34,6 +34,7 @@ The app would not work in development through `npm run dev`, because this will s
     - The frontend state is not reactive. For example, if we change the state in frontend X, that state change will not be reflected in frontend Y until Y is restarted.
     - We don't have to handle state conflicts between the frontend and the backend. The frontend state takes precedence and overwrites the backend state.
     - When frontend X is switched off, there is no guarantee that on the next startup, the state of X will be the same as before switching off. This is because frontend Y might have overwritten the backend state that X is initialised from. We can have this guarantee only for the very last frontend that wrote to the backend.
+    - When a frontend goes offline, and other online frontends exists, then any state updates to the offline frontend is no longer syncable. Those updates will live only till it goes back online, during which it'll all be overwritten.
 
 ## Anomalies
 
