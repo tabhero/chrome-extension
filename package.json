@@ -6,6 +6,7 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "test": "ava",
+    "test:watch": "ava --watch",
     "start": "sirv public",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
