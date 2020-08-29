@@ -76,3 +76,10 @@ export const settleCollections = (storageCollections, appCollections) => {
         ...Object.fromEntries(appCollections.map(({ id, ...rest }) => [ id, { ...rest } ]))
     };
 };
+
+export const settleOpenTabsLinks = (storageLinks, openTabsLinks) => {
+    return {
+        ...storageLinks,
+        ...Object.fromEntries(openTabsLinks.map(({ id, ...rest}) => [ id, { ...rest } ]))
+    };
+};
