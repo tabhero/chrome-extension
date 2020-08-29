@@ -1,5 +1,5 @@
 import { omit } from 'lodash-es';
-import { urlEqual } from './utils';
+import { urlEqual } from '../utils';
 
 export const getLinkOfUrl = (storageData, url) => {
     const { links } = storageData;
