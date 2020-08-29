@@ -23,7 +23,6 @@ test('should add a new collection from app state to storage', t => {
         updatedAt: 'updated-at',
         links: ['link-one', 'link-two']
     }];
-    const actual = settleCollections(storageCollections, appCollections);
     const expected = {
         ...storageCollections,
         'id2': {
@@ -33,34 +32,35 @@ test('should add a new collection from app state to storage', t => {
             links: ['link-one', 'link-two']
         }
     };
+    const actual = settleCollections(storageCollections, appCollections);
     t.deepEqual(actual, expected);
 });
 
 test('should overwrite the collections from storage with the collections from app state', t => {
     const storageCollections = {
         'id1': {
-            name: 'one',
+            name: 'name',
             createAt: 'created-at',
-            updatedAt: 'updated-before',
+            updatedAt: 'updated-at',
             links: ['link-one']
         }
     };
     const appCollections = [{
         id: 'id1',
-        name: 'new name',
+        name: 'name',
         createAt: 'created-at',
-        updatedAt: 'updated-after',
+        updatedAt: 'updated-at',
         links: ['link-one', 'link-two']
     }];
-    const actual = settleCollections(storageCollections, appCollections);
     const expected = {
         'id1': {
-            name: 'new name',
+            name: 'name',
             createAt: 'created-at',
-            updatedAt: 'updated-after',
+            updatedAt: 'updated-at',
             links: ['link-one', 'link-two']
         }
     };
+    const actual = settleCollections(storageCollections, appCollections);
     t.deepEqual(actual, expected);
 });
 
