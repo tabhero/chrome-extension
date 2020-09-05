@@ -1,66 +1,109 @@
 import test from 'ava';
 import { settleCollections } from '.';
 
-test('should add a new collection from app state to storage', t => {
-    const storageCollections = {
-        'id1': {
+const storageCollections = {
+    collections: {
+        'col-1': {
             name: 'one',
             createAt: 'created-at',
             updatedAt: 'updated-at',
-            links: ['link-one']
         }
-    };
+    },
+    links: {
+        'col-1': {
+            'link-1': {
+                url: "url-1",
+                title: "title-1",
+                faviconUrl: "favicon-1"
+            }
+        }
+    }
+};
+
+const currentlyOpenLinks = [{
+    id: "link-1",
+    url: "url-1",
+    title: "title-1",
+    faviconUrl: "favicon-1"
+}, {
+    id: "link-2",
+    url: "url-2",
+    title: "title-2",
+    faviconUrl: "favicon-2"
+}];
+
+test('should add a new collection from app state to storage', t => {
     const appCollections = [{
-        id: 'id1',
+        id: 'col-1',
         name: 'one',
         createAt: 'created-at',
-        updatedAt: 'updated-at',
-        links: ['link-one']
+        updatedAt: 'updated-at'
     },{
-        id: 'id2',
-        name: 'name',
+        id: 'col-2',
+        name: 'two',
         createAt: 'created-at',
-        updatedAt: 'updated-at',
-        links: ['link-one', 'link-two']
+        updatedAt: 'updated-at'
     }];
     const expected = {
-        ...storageCollections,
-        'id2': {
-            name: 'name',
-            createAt: 'created-at',
-            updatedAt: 'updated-at',
-            links: ['link-one', 'link-two']
+        collections: {
+            ...storageCollections.collections,
+            'col-2': {
+                name: 'two',
+                createAt: 'created-at',
+                updatedAt: 'updated-at'
+            }
+        },
+        links: {
+            ...storageCollections.links,
+            'col-2': {
+                'link-1': {
+                    url: "url-1",
+                    title: "title-1",
+                    faviconUrl: "favicon-1"
+                },
+                'link-2': {
+                    url: "url-2",
+                    title: "title-2",
+                    faviconUrl: "favicon-2"
+                }
+            }
         }
     };
-    const actual = settleCollections(storageCollections, appCollections);
+    const actual = settleCollections(storageCollections, appCollections, currentlyOpenLinks, 'col-2');
     t.deepEqual(actual, expected);
 });
 
 test('should overwrite the collections from storage with the collections from app state', t => {
-    const storageCollections = {
-        'id1': {
-            name: 'name',
-            createAt: 'created-at',
-            updatedAt: 'updated-at',
-            links: ['link-one']
-        }
-    };
     const appCollections = [{
-        id: 'id1',
-        name: 'name',
+        id: 'col-1',
+        name: 'newname',
         createAt: 'created-at',
-        updatedAt: 'updated-at',
-        links: ['link-one', 'link-two']
+        updatedAt: 'updated-at'
     }];
     const expected = {
-        'id1': {
-            name: 'name',
-            createAt: 'created-at',
-            updatedAt: 'updated-at',
-            links: ['link-one', 'link-two']
+        collections: {
+            'col-1': {
+                name: 'newname',
+                createAt: 'created-at',
+                updatedAt: 'updated-at',
+            }
+        },
+        links: {
+            'col-1': {
+                'link-1': {
+                    url: "url-1",
+                    title: "title-1",
+                    faviconUrl: "favicon-1"
+                },
+                'link-2': {
+                    url: "url-2",
+                    title: "title-2",
+                    faviconUrl: "favicon-2"
+                }
+            }
         }
     };
-    const actual = settleCollections(storageCollections, appCollections);
+    const actual = settleCollections(storageCollections, appCollections, currentlyOpenLinks, 'col-1');
     t.deepEqual(actual, expected);
 });
 

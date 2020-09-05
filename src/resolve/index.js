@@ -74,10 +74,16 @@ export const settleTagsLinks = (storageData, appState) => {
     return updatedTagsLinks;
 };
 
-export const settleCollections = (storageCollections, appCollections) => {
+export const settleCollections = (storageCollections, appCollections, openLinks, updatedCollectionId) => {
     return {
-        ...storageCollections,
-        ...Object.fromEntries(appCollections.map(({ id, ...rest }) => [ id, { ...rest } ]))
+        collections: {
+            ...storageCollections.collections,
+            ...Object.fromEntries(appCollections.map(({ id, ...rest }) => [ id, { ...rest } ]))
+        },
+        links: {
+            ...storageCollections.links,
+            [updatedCollectionId]: Object.fromEntries(openLinks.map(({ id, ...rest }) => [ id, { ...rest } ]))
+        }
     };
 };
 
