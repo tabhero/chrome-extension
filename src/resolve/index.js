@@ -35,10 +35,14 @@ export const settleTags = (storageData, appState) => {
 };
 
 export const settleLinks = (storageData, appState) => {
-    const { links: storageLinks } = storageData;
+    const { links: storageLinks, collections } = storageData;
     const { tags, currentLink } = appState;
 
-    return tags.some(tag => tag.added)
+    const linksInCollections = new Set(
+        Object.entries(collections).flatMap(([ id, body ]) => body.links)
+    );
+
+    return (tags.some(tag => tag.added) || linksInCollections.has(currentLink.id))
         ? { ...storageLinks, [currentLink.id]: omit(currentLink, ['id']) }
         : omit(storageLinks, currentLink.id);
 };
