@@ -30,7 +30,7 @@
     }
 
     function handleMerge() {
-        dispatch('mergeClick', { collectionName: matchedCollection.name });
+        dispatch('mergeClick', { matchedCollectionId: matchedCollection.id });
     }
 </script>
 
