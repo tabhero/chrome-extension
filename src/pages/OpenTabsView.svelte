@@ -1,6 +1,6 @@
 <script>
     import { Link } from 'svelte-routing';
-
+    import { createEventDispatcher } from 'svelte';
     import {
         LinksList,
         Heading,
@@ -15,9 +15,15 @@
     export let links = [];
     export let collectionName = '';
 
+    const dispatch = createEventDispatcher();
+
     $: if (collectionName === '') {
         const currentDate = new Date();
         collectionName = `${twelveHourTime(currentDate)}, ${currentDate.toDateString()}`;
+    }
+
+    function handleSave() {
+        dispatch('saveClick', { collectionName });
     }
 </script>
 
@@ -48,7 +54,7 @@
             ]}/>
         </div>
         <div class="row center">
-            <ActionButton text="Save" />
+            <ActionButton text="Save" on:click={handleSave} />
         </div>
     </section>
     <section>

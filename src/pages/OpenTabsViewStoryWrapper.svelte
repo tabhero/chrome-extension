@@ -9,6 +9,7 @@
 <Router>
     <OpenTabsView
         {links}
-        {collectionName} />
+        {collectionName}
+        on:saveClick />
 </Router>
 

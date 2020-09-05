@@ -1,3 +1,4 @@
+import { action } from '@storybook/addon-actions';
 import OpenTabsViewStoryWrapper from './OpenTabsViewStoryWrapper.svelte';
 
 export default {
@@ -33,7 +34,9 @@ export const OneTab = () => ({
         links: [links[0]],
         collectionName: 'foobar',
     },
-    on: {},
+    on: {
+        saveClick: action('saveClick'),
+    },
 });
 
 export const ManyTabs = () => ({
@@ -42,7 +45,9 @@ export const ManyTabs = () => ({
         links: [...links, ...links, ...links, ...links, ...links, ...links],
         collectionName: 'foobar',
     },
-    on: {},
+    on: {
+        saveClick: action('saveClick'),
+    },
 });
 
 export const NoCollectionName = () => ({
@@ -51,5 +56,7 @@ export const NoCollectionName = () => ({
         links: [...links, ...links, ...links, ...links, ...links, ...links],
         collectionName: '',
     },
-    on: {},
+    on: {
+        saveClick: action('saveClick'),
+    },
 });
