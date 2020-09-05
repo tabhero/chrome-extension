@@ -89,3 +89,28 @@ export const settleOpenTabsLinks = (storageLinks, openTabsLinks) => {
         ...Object.fromEntries(openTabsLinks.map(({ id, ...rest}) => [ id, { ...rest } ]))
     };
 };
+
+export const mergeLinks = (linksListOne, linksListTwo) => {
+    /**
+     * The list items are of the Link type, which are assumed to already have normalised urls
+     */
+    linksListOne = linksListOne.slice();
+    linksListTwo = linksListTwo.slice();
+
+    const result = [];
+    while (linksListTwo.length > 0) {
+        const link = linksListTwo[0];
+        const matchResult = linksListOne.findIndex(l => l.url === link.url);
+
+        const processedLink = linksListTwo.shift();
+        result.push(processedLink);
+
+        if (matchResult !== -1) {
+            linksListOne.splice(matchResult, 1);
+        }
+    }
+
+    result.push(...linksListOne);
+
+    return result;
+};
