@@ -67,15 +67,14 @@ export const tagsStateToStorage = async (tags, currentLink) => {
 
     if (currentLink === undefined || currentLink === null) return;
 
-    const [ storageTags, storageLinks, storageTagsLinks, collections ] = await Promise.all([
+    const [ storageTags, storageLinks, storageTagsLinks ] = await Promise.all([
         getAllTags(),
         getAllLinks(),
-        getTagsLinks(),
-        getAllCollections()
+        getTagsLinks()
     ]);
 
     const updatedTags = settleTags({ tags: storageTags }, { tags });
-    const updatedLinks = settleLinks({ links: storageLinks, collections }, { tags, currentLink });
+    const updatedLinks = settleLinks({ links: storageLinks }, { tags, currentLink });
     const updatedTagsLinks = settleTagsLinks({ tagsLinks: storageTagsLinks }, { tags, currentLink });
 
     await setAllTags(updatedTags)
