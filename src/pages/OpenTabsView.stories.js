@@ -28,14 +28,28 @@ const links = [{
     faviconUrl: 'https://medium.com/favicon.ico'
 }];
 
+const collections = [{
+    id: 'Mk9|0Xb+Gp+m&_5i=J',
+    name: 'Movies To Watch',
+    createdAt: '2020-08-21T17:14:28.000Z',
+    updatedAt: '2020-08-21T17:17:12.616Z'
+}, {
+    id: 'R2ob3iTSHSJn,{ulw[',
+    name: 'JS MDN Docs',
+    createdAt: '2020-08-21T17:17:22.821Z',
+    updatedAt: '2020-08-21T17:17:22.821Z'
+}];
+
 export const OneTab = () => ({
     Component: OpenTabsViewStoryWrapper,
     props: {
         links: [links[0]],
+        collections: collections,
         collectionName: 'foobar',
     },
     on: {
         saveClick: action('saveClick'),
+        mergeClick: action('mergeClick'),
     },
 });
 
@@ -43,10 +57,12 @@ export const ManyTabs = () => ({
     Component: OpenTabsViewStoryWrapper,
     props: {
         links: [...links, ...links, ...links, ...links, ...links, ...links],
+        collections: collections,
         collectionName: 'foobar',
     },
     on: {
         saveClick: action('saveClick'),
+        mergeClick: action('mergeClick'),
     },
 });
 
@@ -54,9 +70,24 @@ export const NoCollectionName = () => ({
     Component: OpenTabsViewStoryWrapper,
     props: {
         links: [...links, ...links, ...links, ...links, ...links, ...links],
+        collections: collections,
         collectionName: '',
     },
     on: {
         saveClick: action('saveClick'),
+        mergeClick: action('mergeClick'),
+    },
+});
+
+export const InputMatchesExistingCollectionName = () => ({
+    Component: OpenTabsViewStoryWrapper,
+    props: {
+        links: links,
+        collections: collections,
+        collectionName: 'Movies To Watch',
+    },
+    on: {
+        saveClick: action('saveClick'),
+        mergeClick: action('mergeClick'),
     },
 });

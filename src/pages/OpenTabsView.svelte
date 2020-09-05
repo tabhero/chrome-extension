@@ -13,6 +13,7 @@
     import { twelveHourTime } from '../utils';
 
     export let links = [];
+    export let collections = [];
     export let collectionName = '';
 
     const dispatch = createEventDispatcher();
@@ -22,8 +23,14 @@
         collectionName = `${twelveHourTime(currentDate)}, ${currentDate.toDateString()}`;
     }
 
+    $: matchedCollection = collections.find(({ name }) => name === collectionName);
+
     function handleSave() {
         dispatch('saveClick', { collectionName });
+    }
+
+    function handleMerge() {
+        dispatch('mergeClick', { collectionName: matchedCollection.name });
     }
 </script>
 
@@ -47,14 +54,27 @@
             <Input bind:value={collectionName} placeholder="Enter a name for your collection" />
         </div>
         <div class="row center">
-            <Info content={[
-                [false, 'You have'],
-                [true, `${links.length} tab${links.length !== 1 ? 's' : ''}`],
-                [false, 'currently open'],
-            ]}/>
+            {#if matchedCollection}
+                <Info content={[
+                    [true, `"${collectionName}"`],
+                    [false, 'is an existing collection. Please'],
+                    [true, 'edit the collection name'],
+                    [false, 'or merge the current tabs with the existing collection'],
+                ]}/>
+            {:else}
+                <Info content={[
+                    [false, 'You have'],
+                    [true, `${links.length} tab${links.length !== 1 ? 's' : ''}`],
+                    [false, 'currently open'],
+                ]}/>
+            {/if}
         </div>
         <div class="row center">
-            <ActionButton text="Save" on:click={handleSave} />
+            {#if matchedCollection}
+                <ActionButton text="Merge" on:click={handleMerge} />
+            {:else}
+                <ActionButton text="Save" on:click={handleSave} />
+            {/if}
         </div>
     </section>
     <section>

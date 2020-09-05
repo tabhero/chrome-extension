@@ -3,6 +3,7 @@
     import OpenTabsView from './OpenTabsView.svelte';
 
     export let links;
+    export let collections;
     export let collectionName;
 </script>
 
@@ -10,6 +11,8 @@
     <OpenTabsView
         {links}
         {collectionName}
-        on:saveClick />
+        {collections}
+        on:saveClick
+        on:mergeClick />
 </Router>
 
