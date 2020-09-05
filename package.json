@@ -42,8 +42,8 @@
   },
   "license": "GPL-3.0-or-later",
   "ava": {
-		"require": [
-			"esm"
-		]
-	}
+    "require": [
+      "esm"
+    ]
+  }
 }
