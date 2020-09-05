@@ -5,6 +5,7 @@
     export let links;
     export let collections;
     export let collectionName;
+    export let savedState;
 </script>
 
 <Router>
@@ -12,6 +13,7 @@
         {links}
         {collectionName}
         {collections}
+        {savedState}
         on:saveClick
         on:mergeClick />
 </Router>

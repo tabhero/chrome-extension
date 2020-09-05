@@ -46,6 +46,7 @@ export const OneTab = () => ({
         links: [links[0]],
         collections: collections,
         collectionName: 'foobar',
+        savedState: undefined,
     },
     on: {
         saveClick: action('saveClick'),
@@ -59,6 +60,7 @@ export const ManyTabs = () => ({
         links: [...links, ...links, ...links, ...links, ...links, ...links],
         collections: collections,
         collectionName: 'foobar',
+        savedState: undefined,
     },
     on: {
         saveClick: action('saveClick'),
@@ -72,6 +74,7 @@ export const NoCollectionName = () => ({
         links: [...links, ...links, ...links, ...links, ...links, ...links],
         collections: collections,
         collectionName: '',
+        savedState: undefined,
     },
     on: {
         saveClick: action('saveClick'),
@@ -85,6 +88,49 @@ export const InputMatchesExistingCollectionName = () => ({
         links: links,
         collections: collections,
         collectionName: 'Movies To Watch',
+        savedState: undefined,
+    },
+    on: {
+        saveClick: action('saveClick'),
+        mergeClick: action('mergeClick'),
+    },
+});
+
+export const NewCollectionSaved = () => ({
+    Component: OpenTabsViewStoryWrapper,
+    props: {
+        links: links,
+        collections: collections,
+        collectionName: 'foobar',
+        savedState: 'NEW',
+    },
+    on: {
+        saveClick: action('saveClick'),
+        mergeClick: action('mergeClick'),
+    },
+});
+
+export const NewCollectionMergedToExisting = () => ({
+    Component: OpenTabsViewStoryWrapper,
+    props: {
+        links: links,
+        collections: collections,
+        collectionName: 'Movies To Watch',
+        savedState: 'MERGE',
+    },
+    on: {
+        saveClick: action('saveClick'),
+        mergeClick: action('mergeClick'),
+    },
+});
+
+export const ImpossibleSavedState = () => ({
+    Component: OpenTabsViewStoryWrapper,
+    props: {
+        links: links,
+        collections: collections,
+        collectionName: 'foobar',
+        savedState: 'IMPOSSIBLE_BOI',
     },
     on: {
         saveClick: action('saveClick'),

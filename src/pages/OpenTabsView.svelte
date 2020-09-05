@@ -15,6 +15,7 @@
     export let links = [];
     export let collections = [];
     export let collectionName = '';
+    export let savedState = undefined;
 
     const dispatch = createEventDispatcher();
 
@@ -43,41 +44,71 @@
 
 <div class="container">
     <section>
-        <div class="row">
-            <nav>
-                <Link to="/index.html">
-                    <NavLink text="Cancel" />
-                </Link>
-            </nav>
-        </div>
-        <div class="row center">
-            <Input bind:value={collectionName} placeholder="Enter a name for your collection" />
-        </div>
-        <div class="row center">
-            {#if matchedCollection}
+        {#if savedState}
+            {#if savedState === 'NEW'}
                 <Info content={[
+                    [false, 'Your new collection'],
                     [true, `"${collectionName}"`],
-                    [false, 'is an existing collection. Please'],
-                    [true, 'edit the collection name'],
-                    [false, 'or'],
-                    [true, 'merge the current tabs'],
-                    [false, 'with the existing collection'],
+                    [false, 'has been successfully saved with'],
+                    [true, `${links.length}`],
+                    [false, 'tabs'],
+                ]}/>
+            {:else if savedState === 'MERGE'}
+                <Info content={[
+                    [false, 'The'],
+                    [true, `${links.length}`],
+                    [false, 'current tabs have been successfully added to your existing collection'],
+                    [true, `"${matchedCollection.name}"`],
                 ]}/>
             {:else}
                 <Info content={[
-                    [false, 'You have'],
-                    [true, `${links.length} tab${links.length !== 1 ? 's' : ''}`],
-                    [false, 'currently open'],
+                    [false, "My developers have made a grave mistake somewhere. As a result, you've entered an"],
+                    [true, 'impossible state'],
+                    [false, ". We can either both pretend this didn't happen, or you can let them know they messed up"]
                 ]}/>
             {/if}
-        </div>
-        <div class="row center">
-            {#if matchedCollection}
-                <ActionButton text="Merge" on:click={handleMerge} />
-            {:else}
-                <ActionButton text="Save" on:click={handleSave} />
-            {/if}
-        </div>
+            <div class="row center">
+                <Link to="/index.html">
+                    <NavLink text="Close" />
+                </Link>
+            </div>
+        {:else}
+            <div class="row">
+                <nav>
+                    <Link to="/index.html">
+                        <NavLink text="Cancel" />
+                    </Link>
+                </nav>
+            </div>
+            <div class="row center">
+                <Input bind:value={collectionName} placeholder="Enter a name for your collection" />
+            </div>
+            <div class="row center">
+                {#if matchedCollection}
+                    <Info content={[
+                        [true, `"${collectionName}"`],
+                        [false, 'is an existing collection. Please'],
+                        [true, 'edit the collection name'],
+                        [false, 'or'],
+                        [true, 'merge the current tabs'],
+                        [false, 'with the existing collection'],
+                    ]}/>
+                {:else}
+                    <Info content={[
+                        [false, 'You have'],
+                        [true, `${links.length} tab${links.length !== 1 ? 's' : ''}`],
+                        [false, 'currently open'],
+                    ]}/>
+                {/if}
+            </div>
+            <div class="row center">
+                {#if matchedCollection}
+                    <ActionButton text="Merge" on:click={handleMerge} />
+                {:else}
+                    <ActionButton text="Save" on:click={handleSave} />
+                {/if}
+            </div>
+        {/if}
     </section>
     <section>
         <div class="row">
