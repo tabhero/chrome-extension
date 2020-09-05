@@ -18,9 +18,7 @@
         collections = cols;
     });
 
-    async function saveCollection(event) {
-        const { collectionName } = event.detail;
-
+    async function saveCollection() {
         const newCollection = {
             id: uniqueId(),
             name: collectionName,
@@ -34,5 +32,5 @@
 
 <OpenTabsView
     {links}
-    {collectionName}
+    bind:collectionName
     on:saveClick={saveCollection} />
