@@ -59,7 +59,9 @@
                     [true, `"${collectionName}"`],
                     [false, 'is an existing collection. Please'],
                     [true, 'edit the collection name'],
-                    [false, 'or merge the current tabs with the existing collection'],
+                    [false, 'or'],
+                    [true, 'merge the current tabs'],
+                    [false, 'with the existing collection'],
                 ]}/>
             {:else}
                 <Info content={[
