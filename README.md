@@ -25,6 +25,10 @@ The `public` folder is where the svelte-built chrome extension lives. The html f
 
 The app would not work in development through `npm run dev`, because this will start the Svelte dev server, which serves the app in a web context, where the Chrome APIs are not available.
 
+## Design Decisions
+
+- [collections-links persistent data structure](https://firebase.google.com/docs/database/web/structure-data#flatten_data_structures)
+
 ## Behaviour
 
 - The app popup exists within the context of a single chrome tab. On switching chrome tabs, the popup should backup the state into the chrome storage and then a new app popup should be instantiated, loading data associated with the new tab from the storage.
