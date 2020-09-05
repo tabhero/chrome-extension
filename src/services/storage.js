@@ -19,7 +19,10 @@ export const getTagsLinks = async () => {
 };
 
 export const getAllCollections = () => {
-    return getChromeStorage('collections', {});
+    return getChromeStorage('collections', {
+        collections: {},
+        links: {}
+    });
 };
 
 export const setAllTags = (tags) => {

@@ -1,11 +1,11 @@
 import { linkFromTab } from './utils';
 import {
     getAllTags, getAllLinks, getTagsLinks, getAllCollections,
-    setAllTags, setAllLinks, setTagsLinks
+    setAllTags, setAllLinks, setTagsLinks, setAllCollections,
 } from './services/storage';
 import {
     getLinkOfUrl, getTagIds,
-    settleTags, settleLinks, settleTagsLinks
+    settleTags, settleLinks, settleTagsLinks, settleCollections,
 } from './resolve';
 
 export const initTagsState = async (currentTab) => {
@@ -43,19 +43,13 @@ export const initOpenTabsState = async (openTabs) => {
      * given the current window's open tabs and the data in the persistent storage
      */
 
-    const [ links, collections ] = await Promise.all([
-        getAllLinks(),
-        getAllCollections()
-    ]);
+    const collectionStorage = await getAllCollections();
 
-    const openLinks = openTabs.map(tab => {
-        const link = getLinkOfUrl({ links }, tab.url);
-        return linkFromTab(tab, link);
-    });
+    const openLinks = openTabs.map(tab => linkFromTab(tab));
 
     return {
         openLinks,
-        collections: Object.entries(collections).map(([ id, body ]) => ({
+        collections: Object.entries(collectionStorage.collections).map(([ id, body ]) => ({
             id,
             ...body
         }))
@@ -80,4 +74,11 @@ export const tagsStateToStorage = async (tags, currentLink) => {
     await setAllTags(updatedTags)
     await setAllLinks(updatedLinks)
     await setTagsLinks(updatedTagsLinks)
+};
+
+export const openTabsStateToStorage = async (openTabsLinks, appCollections, updatedCollectionId) => {
+    const collectionStorage = await getAllCollections();
+
+    const updatedCollectionStorage = settleCollections(collectionStorage, appCollections, openTabsLinks, updatedCollectionId);
+    await setAllCollections(updatedCollectionStorage);
 };
