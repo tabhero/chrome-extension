@@ -11,6 +11,7 @@
     let links = [];
     let collections = [];
     let collectionName = '';
+    let savedState = undefined;
 
     onMount(async () => {
         const tabs = await getCurrentWindowTabs();
@@ -29,6 +30,7 @@
         };
         collections = [...collections, newCollection];
         await openTabsStateToStorage(links, collections, newCollection.id);
+        savedState = 'NEW';
     }
 
     async function mergeCollection(event) {
@@ -48,12 +50,14 @@
 
         const mergedLinks = mergeLinks(existingLinks, links);
         await openTabsStateToStorage(mergedLinks, collections, matchedCollectionId);
+        savedState = 'MERGE';
     }
 </script>
 
 <OpenTabsView
     {links}
     {collections}
+    {savedState}
     bind:collectionName
     on:saveClick={saveCollection}
     on:mergeClick={mergeCollection} />
