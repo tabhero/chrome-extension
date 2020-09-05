@@ -70,7 +70,7 @@ export const settleTagsLinks = (storageData, appState) => {
     return updatedTagsLinks;
 };
 
-export const settleCollections = (storageCollections, appCollections, openLinks, updatedCollectionId) => {
+export const settleCollections = (storageCollections, appCollections, linksToSave, updatedCollectionId) => {
     return {
         collections: {
             ...storageCollections.collections,
@@ -78,7 +78,7 @@ export const settleCollections = (storageCollections, appCollections, openLinks,
         },
         links: {
             ...storageCollections.links,
-            [updatedCollectionId]: Object.fromEntries(openLinks.map(({ id, ...rest }) => [ id, { ...rest } ]))
+            [updatedCollectionId]: Object.fromEntries(linksToSave.map(({ id, ...rest }) => [ id, { ...rest } ]))
         }
     };
 };

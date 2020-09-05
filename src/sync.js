@@ -76,9 +76,9 @@ export const tagsStateToStorage = async (tags, currentLink) => {
     await setTagsLinks(updatedTagsLinks)
 };
 
-export const openTabsStateToStorage = async (openTabsLinks, appCollections, updatedCollectionId) => {
+export const openTabsStateToStorage = async (linksToSave, appCollections, updatedCollectionId) => {
     const collectionStorage = await getAllCollections();
 
-    const updatedCollectionStorage = settleCollections(collectionStorage, appCollections, openTabsLinks, updatedCollectionId);
+    const updatedCollectionStorage = settleCollections(collectionStorage, appCollections, linksToSave, updatedCollectionId);
     await setAllCollections(updatedCollectionStorage);
 };
