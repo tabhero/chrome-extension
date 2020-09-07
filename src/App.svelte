@@ -1,9 +1,9 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
     import { get } from 'svelte/store';
-    import { Router, Route } from "svelte-routing";
-    import { TopBar } from '@tabhero/svelte-components';
+    import { Router, Route } from 'svelte-routing';
 
+    import TopBar from './components/TopBar.svelte';
     import Main from './pages/Main.svelte';
     import OpenTabs from './pages/OpenTabs.svelte';
 

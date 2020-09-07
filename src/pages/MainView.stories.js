@@ -21,44 +21,66 @@ const tags = [
     { id: 'xyz', added: true, name: 'Docs' },
 ];
 
-export const Default = () => ({
-    Component: MainViewStoryWrapper,
-    props: {
-        tags: tags,
-        currentTabUrl: 'www.google.co.in',
-        addTagsInput: 'Re'
-    },
-    on: {
-        tagClick: action('tagClicked'),
-        selectSuggestion: action('selectSuggestion'),
-        selectNew: action('selectNew')
-    }
-});
+const eventHandlers = {
+    tagClick: action('tagClicked'),
+    selectSuggestion: action('selectSuggestion'),
+    selectNew: action('selectNew'),
+    clickRight: action('clickRight'),
+    clickLeft: action('clickLeft'),
+    clickPage: action('clickPage'),
+};
 
 export const NoTagsExist = () => ({
     Component: MainViewStoryWrapper,
     props: {
         tags: [],
+        currentPageIndex: 0,
         currentTabUrl: 'www.google.co.in',
         addTagsInput: ''
     },
-    on: {
-        tagClick: action('tagClicked'),
-        selectSuggestion: action('selectSuggestion'),
-        selectNew: action('selectNew')
-    }
+    on: eventHandlers
 });
 
-export const AddTagsCaseInsensitiveInputButNoMatch = () => ({
+export const OneTaggridPage = () => ({
+    Component: MainViewStoryWrapper,
+    props: {
+        tags: tags.slice(0, 6),
+        currentPageIndex: 0,
+        currentTabUrl: 'www.google.co.in',
+        addTagsInput: ''
+    },
+    on: eventHandlers
+});
+
+export const ManyTaggridPages = () => ({
+    Component: MainViewStoryWrapper,
+    props: {
+        tags: [...tags, ...tags],
+        currentPageIndex: 2,
+        currentTabUrl: 'www.google.co.in',
+        addTagsInput: ''
+    },
+    on: eventHandlers
+});
+
+export const EmptyRowsOnLastTaggridPage = () => ({
+    Component: MainViewStoryWrapper,
+    props: {
+        tags: tags.slice(0, 8),
+        currentPageIndex: 1,
+        currentTabUrl: 'www.google.co.in',
+        addTagsInput: ''
+    },
+    on: eventHandlers
+});
+
+export const AddTagsCaseInsensitiveButNonMatchingSuggestion = () => ({
     Component: MainViewStoryWrapper,
     props: {
         tags: tags,
+        currentPageIndex: 0,
         currentTabUrl: 'www.google.co.in',
         addTagsInput: 'recipe'
     },
-    on: {
-        tagClick: action('tagClicked'),
-        selectSuggestion: action('selectSuggestion'),
-        selectNew: action('selectNew')
-    }
+    on: eventHandlers
 });

@@ -1,20 +1,25 @@
 <script>
     import { Link } from 'svelte-routing';
+    import { chunk } from 'lodash-es';
 
     import {
         ActionButton,
         SearchButton,
-        TagPages,
+        TagGrid,
+        CarouselNav,
         AddTagBar,
-        Heading
+        Heading,
+        Info,
     } from '@tabhero/svelte-components';
 
     export let tags = [];
+    export let currentPageIndex = 0;
     export let currentTabUrl = '';
     export let addTagsInput = '';
 
     $: tagSuggestions = tags
         .filter(tag => tag.name.toLowerCase().startsWith(addTagsInput.toLowerCase()));
+    $: pages = chunk(tags, 6);
 </script>
 
 <style>
@@ -31,11 +36,9 @@
     .tag-pages-wrapper {
         min-height: 8rem;
         display: flex;
-    }
-    .tag-pages-wrapper > :global(*) {
-        /* the min-height of the parent means we gotta center this child */
-        /* height: 100% here doesn't work for some reason, so using this instead */
-        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
     }
 </style>
 
@@ -58,7 +61,17 @@
             <p class="url-text">{currentTabUrl}</p>
         </div>
         <div class="row tag-pages-wrapper">
-            <TagPages {tags} on:tagClick />
+            {#if tags.length}
+                <TagGrid tags={pages[currentPageIndex]} minRows={3} on:tagClick />
+            {:else}
+                <Info content={[
+                    [true, 'Add a tag'],
+                    [false, 'to get started'],
+                ]} />
+            {/if}
+            {#if pages.length > 1}
+                <CarouselNav numPages={pages.length} currentIndex={currentPageIndex} on:clickRight on:clickLeft on:clickPage />
+            {/if}
         </div>
     </section>
     <section>
@@ -66,7 +79,7 @@
             <Heading text="Add Tags" />
         </div>
         <div class="row">
-            <AddTagBar suggestions={tagSuggestions} bind:input={addTagsInput} on:selectSuggestion on:selectNew />
+            <AddTagBar suggestions={tagSuggestions} bind:input={addTagsInput} float on:selectSuggestion on:selectNew />
         </div>
     </section>
 </div>
