@@ -1,6 +1,7 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
     import { Link } from 'svelte-routing';
-    import { chunk } from 'lodash-es';
+    import { chunk, clamp } from 'lodash-es';
 
     import {
         ActionButton,
@@ -17,9 +18,28 @@
     export let currentTabUrl = '';
     export let addTagsInput = '';
 
+    const dispatch = createEventDispatcher();
+
     $: tagSuggestions = tags
         .filter(tag => tag.name.toLowerCase().startsWith(addTagsInput.toLowerCase()));
     $: pages = chunk(tags, 6);
+
+    function handleClickRight() {
+        dispatch('setPage', {
+            pageIndex: clamp(currentPageIndex + 1, 0, pages.length - 1)
+        });
+    }
+    function handleClickLeft() {
+        dispatch('setPage', {
+            pageIndex: clamp(currentPageIndex - 1, 0, pages.length - 1)
+        });
+    }
+    function handleClickPage(event) {
+        const { page } = event.detail;
+        dispatch('setPage', {
+            pageIndex: clamp(page, 0, pages.length - 1)
+        });
+    }
 </script>
 
 <style>
@@ -70,7 +90,10 @@
                 ]} />
             {/if}
             {#if pages.length > 1}
-                <CarouselNav numPages={pages.length} currentIndex={currentPageIndex} on:clickRight on:clickLeft on:clickPage />
+                <CarouselNav numPages={pages.length} currentIndex={currentPageIndex}
+                    on:clickRight={handleClickRight}
+                    on:clickLeft={handleClickLeft}
+                    on:clickPage={handleClickPage} />
             {/if}
         </div>
     </section>

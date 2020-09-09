@@ -17,8 +17,6 @@
         on:tagClick
         on:selectSuggestion
         on:selectNew
-        on:clickRight
-        on:clickLeft
-        on:clickPage />
+        on:setPage />
 </Router>
 

@@ -25,9 +25,7 @@ const eventHandlers = {
     tagClick: action('tagClicked'),
     selectSuggestion: action('selectSuggestion'),
     selectNew: action('selectNew'),
-    clickRight: action('clickRight'),
-    clickLeft: action('clickLeft'),
-    clickPage: action('clickPage'),
+    setPage: action('setPage'),
 };
 
 export const NoTagsExist = () => ({
