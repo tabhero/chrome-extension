@@ -69,14 +69,14 @@
             {/if}
             <div class="row center">
                 <Link to="/index.html">
-                    <NavLink text="Close" />
+                    <NavLink>Close</NavLink>
                 </Link>
             </div>
         {:else}
             <div class="row">
                 <nav>
                     <Link to="/index.html">
-                        <NavLink text="Cancel" />
+                        <NavLink>Cancel</NavLink>
                     </Link>
                 </nav>
             </div>
@@ -103,16 +103,16 @@
             </div>
             <div class="row center">
                 {#if matchedCollection}
-                    <ActionButton text="Merge" on:click={handleMerge} />
+                    <ActionButton on:click={handleMerge}>Merge</ActionButton>
                 {:else}
-                    <ActionButton text="Save" on:click={handleSave} />
+                    <ActionButton on:click={handleSave}>Save</ActionButton>
                 {/if}
             </div>
         {/if}
     </section>
     <section>
         <div class="row">
-            <Heading text="List of Current Tabs" />
+            <Heading>List of Current Tabs</Heading>
         </div>
         <div class="row">
             <LinksList {links} faviconSize={16} />

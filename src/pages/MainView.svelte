@@ -66,16 +66,16 @@
     <section>
         <div class="row center">
             <Link to="/open-tabs">
-                <ActionButton text="Save All Open Tabs" />
+                <ActionButton>Save All Open Tabs</ActionButton>
             </Link>
         </div>
         <div class="row center">
-            <SearchButton text="Search Tab Hero" />
+            <SearchButton>Search Tab Hero</SearchButton>
         </div>
     </section>
     <section>
         <div class="row center">
-            <Heading text="Manage Tags" />
+            <Heading>Manage Tags</Heading>
         </div>
         <div class="row center">
             <p class="url-text">{currentTabUrl}</p>
@@ -99,7 +99,7 @@
     </section>
     <section>
         <div class="row center">
-            <Heading text="Add Tags" />
+            <Heading>Add Tags</Heading>
         </div>
         <div class="row">
             <AddTagBar suggestions={tagSuggestions} bind:input={addTagsInput} float on:selectSuggestion on:selectNew />
