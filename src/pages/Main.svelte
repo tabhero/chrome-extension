@@ -7,7 +7,7 @@
     let currentPageIndex = 0;
     let addTagsInput = '';
 
-    function addExistingTag(event) {
+    function toggleTag(event) {
         const { tagId } = event.detail;
         currentTabTags.update(prev => {
             return prev.map(tag => (
@@ -18,7 +18,7 @@
         });
     }
 
-    function addNewTag(event) {
+    function addTag(event) {
         const { tagName } = event.detail;
         const newTag = {
             id: uniqueId(),
@@ -39,7 +39,7 @@
     tags={$currentTabTags}
     {currentPageIndex}
     {addTagsInput}
-    on:tagClick={addExistingTag}
-    on:selectSuggestion={addExistingTag}
-    on:selectNew={addNewTag} />
+    on:tagClick={toggleTag}
+    on:selectSuggestion={toggleTag}
+    on:selectNew={addTag}
     on:setPage={setPage} />
