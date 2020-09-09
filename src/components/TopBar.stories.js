@@ -1,6 +1,7 @@
 import { action } from '@storybook/addon-actions';
 
 import TopBar from './TopBar.svelte';
+import { loginState } from '../enums';
 
 export default {
     title: 'TopBar',
@@ -10,7 +11,7 @@ export default {
 export const NotLoggedInDefaultAndHover = () => ({
     Component: TopBar,
     props: {
-        state: 'NOT_LOGGED_IN',
+        state: loginState.NOT_LOGGED_IN,
         user: null,
     },
     on: { login: action('login') }
@@ -19,7 +20,7 @@ export const NotLoggedInDefaultAndHover = () => ({
 export const LoggingIn = () => ({
     Component: TopBar,
     props: {
-        state: 'LOGGING_IN',
+        state: loginState.LOGGING_IN,
         user: 'somebody@example.com',
     },
     on: { login: action('login') }
@@ -28,7 +29,7 @@ export const LoggingIn = () => ({
 export const LoggedInAndHoverOnIcons = () => ({
     Component: TopBar,
     props: {
-        state: 'LOGGED_IN',
+        state: loginState.LOGGED_IN,
         user: 'somebody@example.com',
     },
     on: { login: action('login') }

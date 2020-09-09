@@ -2,7 +2,9 @@
     import { createEventDispatcher } from 'svelte';
     import { Icon } from '@tabhero/svelte-components';
 
-    export let state = 'NOT_LOGGED_IN';
+    import { loginState } from '../enums';
+
+    export let state = loginState.NOT_LOGGED_IN;
     export let user = '';
 
     const dispatch = createEventDispatcher();
@@ -17,11 +19,11 @@
     <header>
         <h1>Tab Hero</h1>
         <div>
-            {#if state === 'LOGGED_IN'}
+            {#if state === loginState.LOGGED_IN}
                 <span class="info logged-in">
                     Logged in as: <span class="user">{user}</span>
                 </span>
-            {:else if state === 'LOGGING_IN'}
+            {:else if state === loginState.LOGGING_IN}
                 <span class="info logging-in">Login Flow</span>
             {:else}
                 <span class="info not-logged-in" on:click={() => dispatch('login')}>Login to sync data across devices</span>

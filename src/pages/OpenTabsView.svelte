@@ -11,6 +11,7 @@
     } from '@tabhero/svelte-components';
 
     import { twelveHourTime } from '../utils';
+    import { collectionSavedState } from '../enums';
 
     export let links = [];
     export let collections = [];
@@ -45,7 +46,7 @@
 <div class="container">
     <section>
         {#if savedState}
-            {#if savedState === 'NEW'}
+            {#if savedState === collectionSavedState.NEW}
                 <Info content={[
                     [false, 'Your new collection'],
                     [true, `"${collectionName}"`],
@@ -53,7 +54,7 @@
                     [true, `${links.length}`],
                     [false, 'tabs'],
                 ]}/>
-            {:else if savedState === 'MERGE'}
+            {:else if savedState === collectionSavedState.MERGE}
                 <Info content={[
                     [false, 'The'],
                     [true, `${links.length}`],

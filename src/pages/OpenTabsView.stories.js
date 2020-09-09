@@ -1,6 +1,8 @@
 import { action } from '@storybook/addon-actions';
 import OpenTabsViewStoryWrapper from './OpenTabsViewStoryWrapper.svelte';
 
+import { collectionSavedState } from '../enums';
+
 export default {
     title: 'Pages/OpenTabsView',
     component: OpenTabsViewStoryWrapper,
@@ -102,7 +104,7 @@ export const NewCollectionSaved = () => ({
         links: links,
         collections: collections,
         collectionName: 'foobar',
-        savedState: 'NEW',
+        savedState: collectionSavedState.NEW,
     },
     on: {
         saveClick: action('saveClick'),
@@ -116,7 +118,7 @@ export const NewCollectionMergedToExisting = () => ({
         links: links,
         collections: collections,
         collectionName: 'Movies To Watch',
-        savedState: 'MERGE',
+        savedState: collectionSavedState.MERGE,
     },
     on: {
         saveClick: action('saveClick'),
