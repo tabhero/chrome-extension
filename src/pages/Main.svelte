@@ -1,10 +1,10 @@
 <script>
     import { uniqueId } from '../utils';
-
     import { currentTabTags, currentTabLink } from '../store.js';
 
     import MainView from './MainView.svelte';
 
+    let currentPageIndex = 0;
     let addTagsInput = '';
 
     function addExistingTag(event) {
@@ -27,12 +27,19 @@
         };
         currentTabTags.update(prev => [newTag, ...prev]);
     }
+
+    function setPage(event) {
+        const { pageIndex } = event.detail;
+        currentPageIndex = pageIndex;
+    }
 </script>
 
 <MainView
     currentTabUrl={$currentTabLink ? $currentTabLink.url : ''}
     tags={$currentTabTags}
+    {currentPageIndex}
     {addTagsInput}
     on:tagClick={addExistingTag}
     on:selectSuggestion={addExistingTag}
     on:selectNew={addNewTag} />
+    on:setPage={setPage} />
