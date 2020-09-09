@@ -1,6 +1,7 @@
 export const collectionSavedState = {
     NEW: 'NEW',
     MERGE: 'MERGE',
+    NOT_SAVED: 'NOT_SAVED',
 };
 
 export const loginState = {

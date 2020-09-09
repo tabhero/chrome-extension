@@ -16,7 +16,7 @@
     export let links = [];
     export let collections = [];
     export let collectionName = '';
-    export let savedState = undefined;
+    export let savedState = collectionSavedState.NOT_SAVED;
 
     const dispatch = createEventDispatcher();
 
@@ -45,7 +45,7 @@
 
 <div class="container">
     <section>
-        {#if savedState}
+        {#if savedState === collectionSavedState.NEW || savedState === collectionSavedState.MERGE}
             {#if savedState === collectionSavedState.NEW}
                 <Info content={[
                     [false, 'Your new collection'],
@@ -60,12 +60,6 @@
                     [true, `${links.length}`],
                     [false, 'current tabs have been successfully added to your existing collection'],
                     [true, `"${matchedCollection.name}"`],
-                ]}/>
-            {:else}
-                <Info content={[
-                    [false, "My developers have made a grave mistake somewhere. As a result, you've entered an"],
-                    [true, 'impossible state'],
-                    [false, ". We can either both pretend this didn't happen, or you can let them know they messed up"]
                 ]}/>
             {/if}
             <div class="row center">
