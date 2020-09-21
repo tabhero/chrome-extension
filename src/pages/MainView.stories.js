@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
 
-import MainViewStoryWrapper from './MainViewStoryWrapper.svelte';
+import MainViewStoryWrapper from './MainView.wrap.svelte';
 
 export default {
     title: 'Pages/MainView',
