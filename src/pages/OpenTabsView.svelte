@@ -2,7 +2,8 @@
     import { Link } from 'svelte-routing';
     import { createEventDispatcher } from 'svelte';
     import {
-        LinksList,
+        List,
+        Link as TabLink,
         Heading,
         ActionButton,
         Info,
@@ -110,7 +111,9 @@
             <Heading>List of Current Tabs</Heading>
         </div>
         <div class="row">
-            <LinksList {links} faviconSize={16} />
+            <List items={links} let:item={{ title, url, faviconUrl }}>
+                <TabLink {title} {url} {faviconUrl} faviconSize={16} />
+            </List>
         </div>
     </section>
 </div>
