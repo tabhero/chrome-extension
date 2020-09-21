@@ -47,22 +47,24 @@
 <div class="container">
     <section>
         {#if savedState === collectionSavedState.NEW || savedState === collectionSavedState.MERGE}
-            {#if savedState === collectionSavedState.NEW}
-                <Info content={[
-                    [false, 'Your new collection'],
-                    [true, `"${collectionName}"`],
-                    [false, 'has been successfully saved with'],
-                    [true, `${links.length}`],
-                    [false, 'tabs'],
-                ]}/>
-            {:else if savedState === collectionSavedState.MERGE}
-                <Info content={[
-                    [false, 'The'],
-                    [true, `${links.length}`],
-                    [false, 'current tabs have been successfully added to your existing collection'],
-                    [true, `"${matchedCollection.name}"`],
-                ]}/>
-            {/if}
+            <div class="row">
+                {#if savedState === collectionSavedState.NEW}
+                    <Info content={[
+                        [false, 'Your new collection'],
+                        [true, `"${collectionName}"`],
+                        [false, 'has been successfully saved with'],
+                        [true, `${links.length}`],
+                        [false, 'tabs'],
+                    ]}/>
+                {:else if savedState === collectionSavedState.MERGE}
+                    <Info content={[
+                        [false, 'The'],
+                        [true, `${links.length}`],
+                        [false, 'current tabs have been successfully added to your existing collection'],
+                        [true, `"${matchedCollection.name}"`],
+                    ]}/>
+                {/if}
+            </div>
             <div class="row center">
                 <Link to="/index.html">
                     <NavLink>Close</NavLink>
