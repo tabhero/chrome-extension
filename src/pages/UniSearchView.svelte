@@ -14,6 +14,12 @@
     export let links = [];
     export let collections = [];
     export let tags = [];
+
+    $: collections = collections.map(c => ({
+        ...c,
+        createdAt: new Date(c.createdAt),
+        updatedAt: new Date(c.updatedAt),
+    }))
 </script>
 
 <div>

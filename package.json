@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@tabhero/svelte-components": "^0.11.3",
+    "fuse.js": "^6.4.1",
     "lodash-es": "^4.17.15",
     "nanoid": "^3.1.12",
     "normalize-url": "^5.1.0",
