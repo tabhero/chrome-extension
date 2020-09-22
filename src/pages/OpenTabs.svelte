@@ -25,7 +25,7 @@
         const newCollection = {
             id: uniqueId(),
             name: collectionName,
-            createAt: new Date().toISOString(),
+            createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
         };
         collections = [...collections, newCollection];
