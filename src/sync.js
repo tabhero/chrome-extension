@@ -56,6 +56,44 @@ export const initOpenTabsState = async (openTabs) => {
     };
 };
 
+export const initUniSearchState = async (currentTab) => {
+    /**
+     * Return all links, tags and collections given the currently open tab and
+     * given the data in the persistent storage
+     */
+
+    const [ tags, links, tagsLinks, collectionStorage ] = await Promise.all([
+        getAllTags(),
+        getAllLinks(),
+        getTagsLinks(),
+        getAllCollections(),
+    ]);
+    const storageData = { tags, links, tagsLinks };
+
+    const currentLink = getLinkOfUrl(storageData, currentTab.url);
+
+    const tagIds = currentLink === undefined
+        ? new Set()
+        : getTagIds(storageData, currentLink);
+
+    return {
+        tags: Object.entries(tags).map(([ id, tagBody ]) => ({
+            id,
+            name: tagBody.name,
+            added: tagIds.has(id)
+        })),
+        collections: Object.entries(collectionStorage.collections).map(([ id, body ]) => ({
+            id,
+            ...body,
+            numTabs: Object.keys(collectionStorage.links[id]).length
+        })),
+        links: Object.entries(links).map(([ id, linkBody ]) => ({
+            id,
+            ...linkBody
+        }))
+    };
+};
+
 export const tagsStateToStorage = async (tags, currentLink) => {
     // TODO: if any of the set storage calls fail, retry that which failed. If retry can't succeed, rollback those that succeeded
 
