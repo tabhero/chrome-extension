@@ -70,7 +70,9 @@
             </Link>
         </div>
         <div class="row center">
-            <SearchButton>Search Tab Hero</SearchButton>
+            <Link to="/universal-search">
+                <SearchButton>Search Tab Hero</SearchButton>
+            </Link>
         </div>
     </section>
     <section>

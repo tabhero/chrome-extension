@@ -6,6 +6,7 @@
     import TopBar from './components/TopBar.svelte';
     import Main from './pages/Main.svelte';
     import OpenTabs from './pages/OpenTabs.svelte';
+    import UniSearch from './pages/UniSearch.svelte';
 
     import { currentTabTags, currentTabLink } from './store.js';
     import { getCurrentTab, registerOnTabUpdate } from './services/chrome';
@@ -64,6 +65,7 @@
         <Router>
             <Route path="/index.html" component={Main} />
             <Route path="/open-tabs" component={OpenTabs} />
+            <Route path="/universal-search" component={UniSearch} />
         </Router>
     </div>
 </div>
