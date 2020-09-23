@@ -45,7 +45,7 @@
 
     .container {
         /* minmax(0, 1fr) prevents a grid blowout */
-        /* https://css-tricks.com/preventing-a-grid-blowout/ */
+        /* https://stackoverflow.com/a/43312314 */
         display: grid;
         grid-template-columns: 100%;
         grid-template-rows: auto minmax(0, 1fr);
