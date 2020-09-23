@@ -42,6 +42,25 @@
         display: flex;
         justify-content: flex-end;
     }
+
+    .container {
+        /* minmax(0, 1fr) prevents a grid blowout */
+        /* https://css-tricks.com/preventing-a-grid-blowout/ */
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: auto minmax(0, 1fr);
+        height: 100%;
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    section > .scrollable-body {
+        flex: 1;
+        overflow: auto;
+    }
 </style>
 
 <div class="container">
@@ -112,7 +131,7 @@
         <div class="row">
             <Heading>List of Current Tabs</Heading>
         </div>
-        <div class="row">
+        <div class="row scrollable-body">
             <List items={links} let:item={{ title, url, faviconUrl }}>
                 <TabLink {title} {url} {faviconUrl} faviconSize={16} />
             </List>

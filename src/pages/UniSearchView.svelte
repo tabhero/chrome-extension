@@ -22,7 +22,7 @@
     }))
 </script>
 
-<div>
+<div class="container">
     <section>
         <div class="row">
             <nav>
@@ -39,7 +39,7 @@
         <div class="row">
             <Heading>Collections</Heading>
         </div>
-        <div class="row">
+        <div class="row scrollable-body">
             {#if collections.length}
                 <List items={collections} let:item={collection}>
                     <Collection {...collection} />
@@ -53,7 +53,7 @@
         <div class="row">
             <Heading>Tags</Heading>
         </div>
-        <div class="row">
+        <div class="row scrollable-body">
             {#if tags.length}
                 <TagGrid {tags} />
             {:else}
@@ -65,7 +65,7 @@
         <div class="row">
             <Heading>Saved Links</Heading>
         </div>
-        <div class="row">
+        <div class="row scrollable-body">
             {#if links.length}
                 <List items={links} let:item={link}>
                     <TabLink {...link} faviconSize={16} />
@@ -81,5 +81,24 @@
     nav {
         display: flex;
         justify-content: flex-end;
+    }
+
+    .container {
+        /* minmax(0, 1fr) prevents a grid blowout */
+        /* https://css-tricks.com/preventing-a-grid-blowout/ */
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: auto repeat(3, minmax(0, 1fr));
+        height: 100%;
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    section > .scrollable-body {
+        flex: 1;
+        overflow: auto;
     }
 </style>
