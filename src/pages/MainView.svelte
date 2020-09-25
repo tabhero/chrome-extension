@@ -43,6 +43,15 @@
 </script>
 
 <style>
+    .container {
+        /* minmax(0, 1fr) prevents a grid blowout */
+        /* https://stackoverflow.com/a/43312314 */
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: auto auto minmax(0, 1fr);
+        height: 100%;
+    }
+
     .url-text {
         font-size: var(--font-size-md);
         overflow-x: hidden;
@@ -59,6 +68,21 @@
         flex-direction: column;
         justify-content: center;
         align-items: stretch;
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .grow {
+        flex: 1;
+    }
+
+    .tagbar-wrapper {
+        /* required if AddTagbar has fill=true prop */
+        display: flex;
+        flex-direction: column;
     }
 </style>
 
@@ -103,8 +127,14 @@
         <div class="row center">
             <Heading>Add Tags</Heading>
         </div>
-        <div class="row">
-            <AddTagBar suggestions={tagSuggestions} bind:input={addTagsInput} float on:selectSuggestion on:selectNew />
+        <div class="row grow tagbar-wrapper">
+            <AddTagBar
+                suggestions={tagSuggestions}
+                bind:input={addTagsInput}
+                float
+                fill
+                on:selectSuggestion
+                on:selectNew />
         </div>
     </section>
 </div>
