@@ -18,6 +18,7 @@ Things we're thinking of doing/using from libraries, build tools, to how we stru
 
 - Firebase Realtime Database [collections-links persistent data structure](https://firebase.google.com/docs/database/web/structure-data#flatten_data_structures)
 - Firestore [ data structure](https://firebase.google.com/docs/firestore/manage-data/structure-data)
+- Firestore Data modelling techniques (https://www.youtube.com/watch?v=35RlydUf6xo)
 
 ## State management
 
