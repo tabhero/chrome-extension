@@ -13,6 +13,7 @@ Things we're thinking of doing/using from libraries, build tools, to how we stru
 ## Back End
 
 - Firebase basics (https://www.youtube.com/watch?v=q5J5ho7YUhA)
+- Firebase tips (https://www.youtube.com/watch?v=iWEgpdVSZyg)
 
 ## Data Structure and Store
 
