@@ -8,7 +8,7 @@
         SearchButton,
         TagGrid,
         CarouselNav,
-        AddTagBar,
+        TagBar,
         Heading,
         Info,
     } from '@tabhero/svelte-components';
@@ -70,6 +70,12 @@
         align-items: stretch;
     }
 
+    .tag-grid-wrapper {
+        padding-top: .75rem;
+        padding-bottom: .75rem;
+        margin-bottom: .5rem;
+    }
+
     section {
         display: flex;
         flex-direction: column;
@@ -107,14 +113,16 @@
             <p class="url-text">{currentTabUrl}</p>
         </div>
         <div class="row tag-pages-wrapper">
-            {#if tags.length}
-                <TagGrid tags={pages[currentPageIndex]} minRows={3} on:tagClick />
-            {:else}
-                <Info content={[
-                    [true, 'Add a tag'],
-                    [false, 'to get started'],
-                ]} />
-            {/if}
+            <div class="tag-grid-wrapper">
+                {#if tags.length}
+                    <TagGrid tags={pages[currentPageIndex]} minRows={3} on:tagClick />
+                {:else}
+                    <Info content={[
+                        [true, 'Add a tag'],
+                        [false, 'to get started'],
+                    ]} />
+                {/if}
+            </div>
             {#if pages.length > 1}
                 <CarouselNav numPages={pages.length} currentIndex={currentPageIndex}
                     on:clickRight={handleClickRight}
@@ -128,7 +136,7 @@
             <Heading>Add Tags</Heading>
         </div>
         <div class="row grow tagbar-wrapper">
-            <AddTagBar
+            <TagBar
                 suggestions={tagSuggestions}
                 bind:input={addTagsInput}
                 float
