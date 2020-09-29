@@ -10,6 +10,7 @@
 
     import { currentTabTags, currentTabLink } from './store.js';
     import { getCurrentTab, registerOnTabUpdate } from './services/chrome';
+    import { auth } from './services/firebase';
     import { initTagsState, tagsStateToStorage } from './sync';
 
     onMount(async () => {
