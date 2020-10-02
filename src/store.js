@@ -10,7 +10,12 @@ export const currentTabLink = writable(null);
 export const tags = readable([], function start(set) {
     const unsubscribe = firestore.collection('tags').onSnapshot({
         next: (snapshot) => {
-            const tags = snapshot.docs.map(documentSnapshot => documentSnapshot.data());
+            const tags = snapshot.docs.map(doc => {
+                return {
+                    ...doc.data(),
+                    id: doc.id,
+                };
+            });
             set(tags);
         },
         error: (error) => {
