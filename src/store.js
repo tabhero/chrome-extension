@@ -94,15 +94,23 @@ export const toggleTag = (tagId, link) => {
     const tags = link.tags.includes(tagId)
         ? link.tags.filter(tId => tId !== tagId)
         : [...link.tags, tagId];
-    firestore.collection('links')
-        .doc(link.id)
-        .set({
-            title: link.title,
-            url: link.url,
-            faviconUrl: link.faviconUrl,
-            tags: tags
-        }, { merge: true })   // merge: true so we don't overwrite the tags array
-        .catch(err => console.error(err));
+
+    if (tags.length === 0) {  // TODO: tags.length === 0 && collections.length === 0
+        firestore.collection('links')
+            .doc(link.id)
+            .delete()
+            .catch(err => console.error(err));
+    } else {
+        firestore.collection('links')
+            .doc(link.id)
+            .set({
+                title: link.title,
+                url: link.url,
+                faviconUrl: link.faviconUrl,
+                tags: tags
+            }, { merge: true })   // merge: true so we don't overwrite the tags array
+            .catch(err => console.error(err));
+    }
 };
 
 export const mappedTags = derived(
