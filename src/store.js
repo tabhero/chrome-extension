@@ -1,4 +1,4 @@
-import { writable, readable } from 'svelte/store';
+import { writable, readable, derived } from 'svelte/store';
 
 import firebase, { firestore } from './services/firebase';
 import { getCurrentTab, registerOnTabUpdate } from './services/chrome';
@@ -89,3 +89,13 @@ export const addTag = (tag, link) => {
         }, { merge: true })   // merge: true so we don't overwrite the tags array
         .catch(err => console.error(err));
 };
+
+export const mappedTags = derived(
+    [tags, currentLink],
+    ([ $tags, $link ]) => {
+        return $tags.map(tag => ({
+            ...tag,
+            added: $link?.tags.includes(tag.id)
+        }));
+    }
+);
