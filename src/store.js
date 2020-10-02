@@ -96,6 +96,12 @@ export const toggleTag = (tagId, link) => {
         : [...link.tags, tagId];
 
     if (tags.length === 0) {  // TODO: tags.length === 0 && collections.length === 0
+        /**
+         * Caution: Not sure if delete fails if a document doesn't exist.
+         * That is, if this link hasn't been saved to the DB, this call might fail.
+         * But luckily it won't happen in our case because in our "toggleTag" operation,
+         * a link that hasn't been saved to the DB would always end up having a non-zero tags.length
+         */
         firestore.collection('links')
             .doc(link.id)
             .delete()
