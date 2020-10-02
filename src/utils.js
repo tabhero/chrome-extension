@@ -36,6 +36,7 @@ export const linkFromTab = (tab, link) => {
         url: normalUrl(tab.url),
         title: tab.title,
         faviconUrl: tab.faviconUrl,
+        tags: link ? link.tags : []
     };
     return updatedLink;
 };
