@@ -10,22 +10,30 @@ export const uniqueId = () => {
     return nanoid();
 };
 
+export const normalUrl = (url) => {
+    if (url.startsWith('chrome-extension://')) {
+        return url;
+    }
+
+    let normalisedUrl;
+    try {
+        normalisedUrl = normalizeUrl(url);
+    } catch (error) {
+        // in cases of view-source urls like view-source:https://developer.mozilla.org, etc
+        normalisedUrl = url;
+    }
+
+    return normalisedUrl;
+};
+
 export const linkFromTab = (tab, link) => {
     /**
      * Update the link fields given the tab fields. Only the link's id will persist through the promotion.
      * All tab related fields will be overridden by the tab
      */
-
-    let normalisedUrl;
-    try {
-        normalisedUrl = normalizeUrl(tab.url);
-    } catch (error) {
-        // in cases of view source tabs like view-source:https://developer.mozilla.org, etc
-        normalisedUrl = tab.url;
-    }
     const updatedLink = {
         id: link ? link.id : uniqueId(),
-        url: normalisedUrl,
+        url: normalUrl(tab.url),
         title: tab.title,
         faviconUrl: tab.faviconUrl,
     };
