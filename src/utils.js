@@ -5,7 +5,7 @@ export const urlEqual = (url1, url2) => {
     return normalizeUrl(url1) === normalizeUrl(url2);
 };
 
-const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz-!?@#$%^&*(){}[]|<>.,;:+=/', 18);
+const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz-!?@#$%^&*(){}[]|<>.,;:+=', 18);
 export const uniqueId = () => {
     return nanoid();
 };
