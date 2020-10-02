@@ -7,14 +7,6 @@ A Chrome extension for tab management.
 - `git clone` this repo
 - `npm install` to install dependencies
 
-## Development
-
-### Developing Components
-
-The components can be developed in isolation in storybook: `npm run storybook`
-
-### Developing the App
-
 Set up firebase by putting the following values in `.env`:
 
 ```
@@ -27,6 +19,16 @@ FIREBASE_STORAGE_BUCKET=...
 FIREBASE_MESSAGING_SENDER_ID=...
 FIREBASE_MEASUREMENT_ID=...
 ```
+
+Whitelist the chrome extension ID in Firebase and perform other necessary steps as instructed in the [Firebase authentication docs](https://firebase.google.com/docs/auth/web/google-signin#authenticate_with_firebase_in_a_chrome_extension).
+
+## Development
+
+### Developing Components
+
+The components can be developed in isolation in storybook: `npm run storybook`
+
+### Developing the App
 
 The `public` folder is where the svelte-built chrome extension lives. The html files there should reference the svelte js bundles. Hot-reloading isn't set up. So to develop, use the following workflow:
 
