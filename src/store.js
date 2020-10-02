@@ -1,6 +1,6 @@
 import { writable, readable } from 'svelte/store';
 
-import { firestore } from './services/firebase';
+import firebase, { firestore } from './services/firebase';
 import { getCurrentTab, registerOnTabUpdate } from './services/chrome';
 import { normalUrl, linkFromTab } from './utils';
 
@@ -67,8 +67,20 @@ export const currentLink = readable(null, async (set) => {
     };
 });
 
-export const addTag = (tag) => {
-    const { id, name } = tag;
-    return firestore.collection('tags').doc(id).set({ name })
+export const addTag = (tag, link) => {
+    firestore.collection('tags')
+        .doc(tag.id)
+        .set({
+            name: tag.name
+        })
+        .catch(err => console.error(err));
+    firestore.collection('links')
+        .doc(link.id)
+        .set({
+            title: link.title,
+            url: link.url,
+            faviconUrl: link.faviconUrl,
+            tags: firebase.firestore.FieldValue.arrayUnion(tag.id)
+        }, { merge: true })   // merge: true so we don't overwrite the tags array
         .catch(err => console.error(err));
 };
