@@ -1,4 +1,8 @@
-import * as firebase from 'firebase/app';
+// Note: Importing firebase like this leads to firebase.firestore.FieldValue == undefined
+// import * as firebase from 'firebase/app';
+// https://stackoverflow.com/a/58447546
+
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
@@ -17,3 +21,4 @@ firebase.initializeApp(firebaseConfig);
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+export default firebase;
