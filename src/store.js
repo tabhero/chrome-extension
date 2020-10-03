@@ -7,25 +7,31 @@ import { normalUrl, linkFromTab } from './utils';
 export const currentTabTags = writable([]);
 export const currentTabLink = writable(null);
 
-export const tags = readable([], function start(set) {
-    const unsubscribe = firestore.collection('tags').onSnapshot({
-        next: (snapshot) => {
-            const tags = snapshot.docs.map(doc => {
-                return {
-                    ...doc.data(),
-                    id: doc.id,
-                };
-            });
-            set(tags);
-        },
-        error: (error) => {
-            console.log(error);
-        }
+const getStoreFromCollection = (collectionName) => {
+    return readable([], function start(set) {
+        const unsubscribe = firestore.collection(collectionName).onSnapshot({
+            next: (snapshot) => {
+                const docs = snapshot.docs.map(doc => {
+                    return {
+                        ...doc.data(),
+                        id: doc.id,
+                    };
+                });
+                set(docs);
+            },
+            error: (error) => {
+                console.log(error);
+            }
+        });
+        return function stop() {
+            unsubscribe();
+        };
     });
-    return function stop() {
-        unsubscribe();
-    };
-});
+};
+
+export const tags = getStoreFromCollection('tags');
+
+export const collections = getStoreFromCollection('collections');
 
 const listenLinkUpdate = (url, callback) => {
     return firestore.collection('links')
