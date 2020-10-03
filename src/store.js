@@ -120,7 +120,7 @@ export const toggleTag = (tagId, link) => {
                 url: link.url,
                 faviconUrl: link.faviconUrl,
                 tags: tags
-            }, { merge: true })   // merge: true so we don't overwrite the tags array
+            })
             .catch(err => console.error(err));
     }
 };
