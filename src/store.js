@@ -136,6 +136,14 @@ export const mappedTags = derived(
     }
 );
 
+const fromFirestoreTimestamp = (timestamp) => {
+    return timestamp.toDate().toISOString();
+};
+
+const toFirestoreTimestamp = (timeString) => {
+    return firebase.firestore.Timestamp.fromDate(new Date(timeString));
+};
+
 export const mappedCollections = derived(
     collections,
     ($collections) => {
@@ -146,14 +154,6 @@ export const mappedCollections = derived(
         }));
     }
 );
-
-const fromFirestoreTimestamp = (timestamp) => {
-    return timestamp.toDate();
-};
-
-const toFirestoreTimestamp = (timeString) => {
-    return firebase.firestore.Timestamp.fromDate(new Date(timeString));
-};
 
 export const addCollection = (collection, links) => {
     const { id, name, createdAt, updatedAt } = collection;
