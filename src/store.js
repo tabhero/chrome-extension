@@ -92,7 +92,7 @@ export const addTag = (tag, link) => {
             url: link.url,
             faviconUrl: link.faviconUrl,
             tags: firebase.firestore.FieldValue.arrayUnion(tag.id)
-        }, { merge: true })   // merge: true so we don't overwrite the tags array
+        }, { merge: true })   // merge: true so we don't overwrite the tags or collections array
         .catch(err => console.error(err));
 };
 
@@ -101,7 +101,7 @@ export const toggleTag = (tagId, link) => {
         ? link.tags.filter(tId => tId !== tagId)
         : [...link.tags, tagId];
 
-    if (tags.length === 0) {  // TODO: tags.length === 0 && collections.length === 0
+    if (tags.length === 0 && link.collections.length === 0) {
         /**
          * Caution: Not sure if delete fails if a document doesn't exist.
          * That is, if this link hasn't been saved to the DB, this call might fail.
@@ -119,7 +119,8 @@ export const toggleTag = (tagId, link) => {
                 title: link.title,
                 url: link.url,
                 faviconUrl: link.faviconUrl,
-                tags: tags
+                tags: tags,
+                collections: link.collections
             })
             .catch(err => console.error(err));
     }
@@ -134,3 +135,48 @@ export const mappedTags = derived(
         }));
     }
 );
+
+export const mappedCollections = derived(
+    collections,
+    ($collections) => {
+        return $collections.map(collection => ({
+            ...collection,
+            createdAt: fromFirestoreTimestamp(collection.createdAt),
+            updatedAt: fromFirestoreTimestamp(collection.updatedAt),
+        }));
+    }
+);
+
+const fromFirestoreTimestamp = (timestamp) => {
+    return timestamp.toDate();
+};
+
+const toFirestoreTimestamp = (timeString) => {
+    return firebase.firestore.Timestamp.fromDate(new Date(timeString));
+};
+
+export const addCollection = (collection, links) => {
+    const { id, name, createdAt, updatedAt } = collection;
+
+    const colsRef = firestore.collection('collections');
+    const linksRef = firestore.collection('links');
+
+    const batch = firestore.batch();
+    batch.set(colsRef.doc(id), {
+        name,
+        createdAt: toFirestoreTimestamp(createdAt),
+        updatedAt: toFirestoreTimestamp(updatedAt),
+    });
+
+    links.forEach(link => {
+        batch.set(linksRef.doc(link.id), {
+                title: link.title,
+                url: link.url,
+                faviconUrl: link.faviconUrl,
+                tags: link.tags,
+                collections: firebase.firestore.FieldValue.arrayUnion(id), // merge: true so we don't overwrite the collections array
+            }, { merge: true });
+    });
+    batch.commit()
+        .catch(err => console.error(err));
+};
