@@ -34,7 +34,6 @@ The `public` folder is where the svelte-built chrome extension lives. The html f
 
 1. Run `npm run build` to build the app.
 2. Put chrome in developer mode and load the extension into chrome using "Load Unpacked".
-3. Seed the extension's `chrome.storage.local` with data from the `seed` directory, using the file names as the key and their contents as the value. For this, use a tool like [Storage Area Explorer](https://chrome.google.com/webstore/detail/storage-area-explorer/ocfjjjjhkpapocigimmppepjgfdecjkb?hl=en).
 4. You can now either run the extension's popup, or view the extension in its own tab by visiting `chrome-extension://<your-chrome-extension-id>/index.html`
 5. Continue development by re-building the app and re-opening the popup or refreshing the extension's dedicated development tab. Reloading the extension itself is not necessary.
 
