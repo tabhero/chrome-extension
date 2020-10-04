@@ -49,16 +49,17 @@ const listenLinkUpdate = (url, callback) => {
         });
 };
 
-export const currentLink = readable(null, async (set) => {
+export const currentLink = readable(null, (set) => {
     let unsubLinkUpdate = () => {};
 
-    const currentTab = await getCurrentTab();
-    unsubLinkUpdate = listenLinkUpdate(currentTab.url, (link) => {
-        if (link) {
-            set(link);
-        } else {
-            set(linkFromTab(currentTab));
-        }
+    getCurrentTab().then(currentTab => {
+        unsubLinkUpdate = listenLinkUpdate(currentTab.url, (link) => {
+            if (link) {
+                set(link);
+            } else {
+                set(linkFromTab(currentTab));
+            }
+        });
     });
 
     const unsubscribeTabUpdate = registerOnTabUpdate(newTab => {
