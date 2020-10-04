@@ -9,6 +9,8 @@ export const mapTabsToLinks = (tabs, links) => {
 
     return tabs.map(tab => {
         const matchingLink = links.find(link => urlEqual(link.url, tab.url));
-        return linkFromTab(tab, matchingLink);
+        return matchingLink
+            ? linkFromTab(tab, matchingLink)
+            : linkFromTab(tab);
     });
 };
