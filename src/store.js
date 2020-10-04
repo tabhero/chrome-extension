@@ -156,11 +156,16 @@ export const mappedCollections = derived(
     }
 );
 
-export const addCollection = (collection, links) => {
+export const addCollection = async (collection, tabs) => {
     const { id, name, createdAt, updatedAt } = collection;
 
     const colsRef = firestore.collection('collections');
     const linksRef = firestore.collection('links');
+
+    const linksSnapshot = await linksRef.get();
+    const allLinks = linksSnapshot.docs.map(doc => toDomain(doc));
+
+    const links = mapTabsToLinks(tabs, allLinks);
 
     const batch = firestore.batch();
     batch.set(colsRef.doc(id), {
