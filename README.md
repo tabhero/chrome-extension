@@ -76,12 +76,6 @@ The app would not work in development through `npm run dev`, because this will s
 - Firestore write queries will return a promise that resolves only after the data has been written to the server. This means that in offline mode, this promise wouldn't resolve. So don't rely on it to proceed with whatever the next step is after the write query. [source](https://youtu.be/oDvdAFP6OhQ?t=674)
 - The `start` function of a [Svelte readable store](https://svelte.dev/tutorial/readable-stores) should not be async (as of now). When we made it async (to await on a promise inside it), it broke the `stop` function. In what way? Well, we got `r is not a function` everytime we navigate to a new page ("r" because the app is minified). On logging inside an `onDestroy` hook for every page, we found that we're unable to unsubscribe from the readable store. That's because Svelte tries to call the `stop` function, but it's wrapped in a promise because the `start` function is async.
 
-## Challenges
-
-- Handling state conflicts between multiple frontends
-    - Each frontend is aware of only the backend state
-- Aiming for small reads/writes to persistent storage, rather than the bulk version we're doing in the chrome extension right now.
-
 ## Extras
 
 - http://bokardo.com/principles-of-user-interface-design/
