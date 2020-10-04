@@ -91,8 +91,9 @@ export const addTag = (tag, link) => {
             title: link.title,
             url: link.url,
             faviconUrl: link.faviconUrl,
-            tags: firebase.firestore.FieldValue.arrayUnion(tag.id)
-        }, { merge: true })   // merge: true so we don't overwrite the tags or collections array
+            tags: firebase.firestore.FieldValue.arrayUnion(tag.id),
+            collections: link.collections,
+        }, { merge: true })   // merge: true so we don't overwrite the tags array
         .catch(err => console.error(err));
 };
 
