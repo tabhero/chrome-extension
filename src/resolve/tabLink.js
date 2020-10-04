@@ -1,4 +1,4 @@
-import { urlEqual, uniqueId } from '../utils';
+import { urlEqual, linkFromTab } from '../utils';
 
 export const mapTabsToLinks = (tabs, links) => {
     /**
@@ -9,9 +9,6 @@ export const mapTabsToLinks = (tabs, links) => {
 
     return tabs.map(tab => {
         const matchingLink = links.find(link => urlEqual(link.url, tab.url));
-        return {
-            ...tab,
-            id: matchingLink ? matchingLink.id : uniqueId()
-        };
+        return linkFromTab(tab, matchingLink);
     });
 };
