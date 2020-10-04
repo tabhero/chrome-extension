@@ -38,7 +38,7 @@
     currentTabUrl={$currentTabLink ? $currentTabLink.url : ''}
     tags={$currentTabTags}
     {currentPageIndex}
-    {addTagsInput}
+    bind:addTagsInput
     on:tagClick={toggleTag}
     on:selectSuggestion={toggleTag}
     on:selectNew={addTag}
