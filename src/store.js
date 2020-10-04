@@ -32,9 +32,9 @@ const getStoreFromCollection = (collectionName) => {
     });
 };
 
-export const tags = getStoreFromCollection('tags');
+export const firestoreTags = getStoreFromCollection('tags');
 
-export const collections = getStoreFromCollection('collections');
+export const firestoreCollections = getStoreFromCollection('collections');
 
 const listenLinkUpdate = (url, callback) => {
     return firestore.collection('links')
@@ -127,10 +127,10 @@ export const toggleTag = (tagId, link) => {
     }
 };
 
-export const mappedTags = derived(
-    [tags, currentLink],
-    ([ $tags, $link ]) => {
-        return $tags.map(tag => ({
+export const tags = derived(
+    [firestoreTags, currentLink],
+    ([ $firestoreTags, $link ]) => {
+        return $firestoreTags.map(tag => ({
             ...tag,
             added: $link?.tags.includes(tag.id)
         }));
@@ -145,10 +145,10 @@ const toFirestoreTimestamp = (timeString) => {
     return firebase.firestore.Timestamp.fromDate(new Date(timeString));
 };
 
-export const mappedCollections = derived(
-    collections,
-    ($collections) => {
-        return $collections.map(collection => ({
+export const collections = derived(
+    firestoreCollections,
+    ($firestoreCollections) => {
+        return $firestoreCollections.map(collection => ({
             ...collection,
             createdAt: fromFirestoreTimestamp(collection.createdAt),
             updatedAt: fromFirestoreTimestamp(collection.updatedAt),
