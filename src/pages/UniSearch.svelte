@@ -3,8 +3,7 @@
     import Fuse from 'fuse.js';
 
     import UniSearchView from './UniSearchView.svelte';
-    import { initUniSearchState } from '../sync';
-    import { getCurrentTab } from '../services/chrome';
+    import { tags, collections, firestoreLinks as links } from '../store';
 
     let linksSearch;
     let collectionsSearch;
@@ -12,19 +11,28 @@
 
     let searchInput = '';
 
-    onMount(async () => {
-        const currentTab = await getCurrentTab();
-        const { links, collections, tags } = await initUniSearchState(currentTab);
+    onMount(() => {
+        const unsubTags = tags.subscribe(tags => {
+            tagsSearch = new Fuse(tags, {
+                keys: ['name']
+            });
+        });
+        const unsubCollections = collections.subscribe(collections => {
+            collectionsSearch = new Fuse(collections, {
+                keys: ['name']
+            });
+        });
+        const unsubLinks = links.subscribe(links => {
+            linksSearch = new Fuse(links, {
+                keys: ['url', 'title']
+            });
+        });
 
-        linksSearch = new Fuse(links, {
-            keys: ['url', 'title']
-        });
-        collectionsSearch = new Fuse(collections, {
-            keys: ['name']
-        });
-        tagsSearch = new Fuse(tags, {
-            keys: ['name']
-        });
+        return () => {
+            unsubTags();
+            unsubCollections();
+            unsubLinks();
+        };
     });
 
     const mapItem = (list) => list.map(({ item }) => item);

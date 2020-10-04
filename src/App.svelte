@@ -1,6 +1,4 @@
 <script>
-    import { onMount, onDestroy } from 'svelte';
-    import { get } from 'svelte/store';
     import { Router, Route } from 'svelte-routing';
 
     import TopBar from './components/TopBar.svelte';
@@ -8,33 +6,7 @@
     import OpenTabs from './pages/OpenTabs.svelte';
     import UniSearch from './pages/UniSearch.svelte';
 
-    import { currentTabTags, currentTabLink } from './store.js';
-    import { getCurrentTab, registerOnTabUpdate } from './services/chrome';
     import { auth } from './services/firebase';
-    import { initTagsState, tagsStateToStorage } from './sync';
-
-    onMount(async () => {
-        const currentTab = await getCurrentTab();
-        const { tags, currentLink } = await initTagsState(currentTab);
-        currentTabTags.set(tags);
-        currentTabLink.set(currentLink);
-
-        const removeListener = registerOnTabUpdate(async (newTab) => {
-            const { tags, currentLink } = await initTagsState(newTab);
-            currentTabTags.set(tags);
-            currentTabLink.set(currentLink);
-        });
-
-        return async () => {
-            removeListener();
-        };
-    });
-
-    const unsubscribe = currentTabTags.subscribe(async tags => {
-        await tagsStateToStorage(get(currentTabTags), get(currentTabLink));
-    });
-
-    onDestroy(unsubscribe);
 </script>
 
 <style>

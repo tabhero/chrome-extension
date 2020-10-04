@@ -1,7 +1,10 @@
 <script>
     import { uniqueId } from '../utils';
-    import { currentTabTags, currentTabLink } from '../store.js';
-
+    import {
+        tags, currentLink,
+        addTag as addFirebaseTag,
+        toggleTag as toggleFirebaseTag,
+    } from '../store.js';
     import MainView from './MainView.svelte';
 
     let currentPageIndex = 0;
@@ -9,13 +12,13 @@
 
     function toggleTag(event) {
         const { tagId } = event.detail;
-        currentTabTags.update(prev => {
-            return prev.map(tag => (
-                tag.id === tagId
-                    ? { ...tag, added: !tag.added }
-                    : tag
-            ));
-        });
+
+        const link = $currentLink;
+        if (link) {
+            toggleFirebaseTag(tagId, link);
+        } else {
+            console.log('No current link!');
+        }
     }
 
     function addTag(event) {
@@ -23,9 +26,14 @@
         const newTag = {
             id: uniqueId(),
             name: tagName,
-            added: true
         };
-        currentTabTags.update(prev => [newTag, ...prev]);
+
+        const link = $currentLink;
+        if (link) {
+            addFirebaseTag(newTag, link);
+        } else {
+            console.log('No current link!');
+        }
     }
 
     function setPage(event) {
@@ -35,8 +43,8 @@
 </script>
 
 <MainView
-    currentTabUrl={$currentTabLink ? $currentTabLink.url : ''}
-    tags={$currentTabTags}
+    currentTabUrl={$currentLink ? $currentLink.url : ''}
+    tags={$tags}
     {currentPageIndex}
     bind:addTagsInput
     on:tagClick={toggleTag}
