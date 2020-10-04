@@ -36,6 +36,8 @@ export const firestoreTags = getStoreFromCollection('tags');
 
 export const firestoreCollections = getStoreFromCollection('collections');
 
+export const firestoreLinks = getStoreFromCollection('links');
+
 const listenLinkUpdate = (url, callback) => {
     return firestore.collection('links')
         .where('url', '==', normalUrl(url))
