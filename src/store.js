@@ -8,7 +8,7 @@ import { mapTabsToLinks } from './resolve/tabLink';
 export const currentTabTags = writable([]);
 export const currentTabLink = writable(null);
 
-const toDomain = (documentSnapshot) => {
+const docWithId = (documentSnapshot) => {
     return {
         ...documentSnapshot.data(),
         id: documentSnapshot.id,
@@ -19,7 +19,7 @@ const getStoreFromCollection = (collectionName) => {
     return readable([], function start(set) {
         const unsubscribe = firestore.collection(collectionName).onSnapshot({
             next: (snapshot) => {
-                const docs = snapshot.docs.map(doc => toDomain(doc));
+                const docs = snapshot.docs.map(doc => docWithId(doc));
                 set(docs);
             },
             error: (error) => {
@@ -44,7 +44,7 @@ const listenLinkUpdate = (url, callback) => {
                 return callback(null);
             }
             const doc = snapshot.docs[0];
-            const link = toDomain(doc);
+            const link = docWithId(doc);
             callback(link);
         });
 };
@@ -163,7 +163,7 @@ export const addCollection = async (collection, tabs) => {
     const linksRef = firestore.collection('links');
 
     const linksSnapshot = await linksRef.get();
-    const allLinks = linksSnapshot.docs.map(doc => toDomain(doc));
+    const allLinks = linksSnapshot.docs.map(doc => docWithId(doc));
 
     const links = mapTabsToLinks(tabs, allLinks);
 
