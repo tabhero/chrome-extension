@@ -91,7 +91,7 @@ export const addTag = (tag, link) => {
             title: link.title,
             url: link.url,
             faviconUrl: link.faviconUrl,
-            tags: firebase.firestore.FieldValue.arrayUnion(tag.id),
+            tags: firebase.firestore.FieldValue.arrayUnion(tag.id), // arrayUnion so that we maintain uniqueness of items
             collections: link.collections,
         }, { merge: true })   // merge: true so we don't overwrite the tags array
         .catch(err => console.error(err));
@@ -180,8 +180,8 @@ export const addCollection = async (collection, tabs) => {
                 url: link.url,
                 faviconUrl: link.faviconUrl,
                 tags: link.tags,
-                collections: firebase.firestore.FieldValue.arrayUnion(id), // merge: true so we don't overwrite the collections array
-            }, { merge: true });
+                collections: firebase.firestore.FieldValue.arrayUnion(id),  // arrayUnion so that we maintain uniqueness of items
+            }, { merge: true }); // merge: true so we don't overwrite the collections array
     });
     batch.commit()
         .catch(err => console.error(err));
