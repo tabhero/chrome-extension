@@ -2,7 +2,7 @@ import { customAlphabet } from 'nanoid';
 import normalizeUrl from 'normalize-url';
 
 export const urlEqual = (url1, url2) => {
-    return normalizeUrl(url1) === normalizeUrl(url2);
+    return normalUrl(url1) === normalUrl(url2);
 };
 
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz-!?@#$%^&*(){}[]|<>.,;:+=', 18);
