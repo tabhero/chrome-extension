@@ -2,7 +2,7 @@
     import { Router } from 'svelte-routing';
     import OpenTabsView from './OpenTabsView.svelte';
 
-    export let links;
+    export let tabs;
     export let collections;
     export let collectionName;
     export let savedState;
@@ -10,7 +10,7 @@
 
 <Router>
     <OpenTabsView
-        {links}
+        {tabs}
         {collectionName}
         {collections}
         {savedState}

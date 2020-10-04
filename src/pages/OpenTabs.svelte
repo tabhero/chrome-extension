@@ -44,7 +44,7 @@
 </script>
 
 <OpenTabsView
-    links={openTabs}
+    tabs={openTabs}
     collections={$collections}
     {savedState}
     bind:collectionName

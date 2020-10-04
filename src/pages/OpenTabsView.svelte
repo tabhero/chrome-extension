@@ -14,7 +14,7 @@
     import { twelveHourTime } from '../utils';
     import { collectionSavedState } from '../enums';
 
-    export let links = [];
+    export let tabs = [];
     export let collections = [];
     export let collectionName = '';
     export let savedState = collectionSavedState.NOT_SAVED;
@@ -72,13 +72,13 @@
                         [false, 'Your new collection'],
                         [true, `"${collectionName}"`],
                         [false, 'has been successfully saved with'],
-                        [true, `${links.length}`],
+                        [true, `${tabs.length}`],
                         [false, 'tabs'],
                     ]}/>
                 {:else if savedState === collectionSavedState.MERGE}
                     <Info content={[
                         [false, 'The'],
-                        [true, `${links.length}`],
+                        [true, `${tabs.length}`],
                         [false, 'current tabs have been successfully added to your existing collection'],
                         [true, `"${matchedCollection.name}"`],
                     ]}/>
@@ -113,7 +113,7 @@
                 {:else}
                     <Info content={[
                         [false, 'You have'],
-                        [true, `${links.length} tab${links.length !== 1 ? 's' : ''}`],
+                        [true, `${tabs.length} tab${tabs.length !== 1 ? 's' : ''}`],
                         [false, 'currently open'],
                     ]}/>
                 {/if}
@@ -132,7 +132,7 @@
             <Heading>List of Current Tabs</Heading>
         </div>
         <div class="row scrollable-body">
-            <List items={links} let:item={{ title, url, faviconUrl }}>
+            <List items={tabs} let:item={{ title, url, faviconUrl }}>
                 <TabLink {title} {url} {faviconUrl} faviconSize={16} />
             </List>
         </div>
