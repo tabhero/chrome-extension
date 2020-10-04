@@ -13,27 +13,27 @@ const assertFieldsAndIds = (t, tabs, links) => {
 test('mapTabsToLinks should map tabs to links with new IDs when no tabs match with any link', t => {
     const tabs = [{
         url: "url-a",
-        title: "title-1",
-        faviconUrl: "favicon-1"
+        title: "tab-title-1",
+        faviconUrl: "tab-favicon-1"
     }, {
         url: "url-b",
-        title: "title-2",
-        faviconUrl: "favicon-2"
+        title: "tab-title-2",
+        faviconUrl: "tab-favicon-2"
     }, {
         url: "url-c",
-        title: "title-3",
-        faviconUrl: "favicon-3"
+        title: "tab-title-3",
+        faviconUrl: "tab-favicon-3"
     }];
     const links = [{
         id: "link-1",
         url: "url-x",
-        title: "title-1",
-        faviconUrl: "favicon-1"
+        title: "link-title-1",
+        faviconUrl: "link-favicon-1"
     }, {
         id: "link-2",
         url: "url-y",
-        title: "title-2",
-        faviconUrl: "favicon-2"
+        title: "link-title-2",
+        faviconUrl: "link-favicon-2"
     }];
 
     const outputLinks = mapTabsToLinks(tabs, links);
@@ -47,27 +47,27 @@ test('mapTabsToLinks should map tabs to links with new IDs when no tabs match wi
 test('mapTabsToLinks should map tabs to links with IDs same as the IDs of the links they matched', t => {
     const tabs = [{
         url: "url-a",
-        title: "title-1",
-        faviconUrl: "favicon-1"
+        title: "tab-title-1",
+        faviconUrl: "tab-favicon-1"
     }, {
         url: "url-b",
-        title: "title-2",
-        faviconUrl: "favicon-2"
+        title: "tab-title-2",
+        faviconUrl: "tab-favicon-2"
     }, {
         url: "url-c",
-        title: "title-3",
-        faviconUrl: "favicon-3"
+        title: "tab-title-3",
+        faviconUrl: "tab-favicon-3"
     }];
     const links = [{
         id: "link-1",
         url: "url-a",
-        title: "title-1",
-        faviconUrl: "favicon-1"
+        title: "link-title-1",
+        faviconUrl: "link-favicon-1"
     }, {
         id: "link-2",
         url: "url-c",
-        title: "title-2",
-        faviconUrl: "favicon-2"
+        title: "link-title-2",
+        faviconUrl: "link-favicon-2"
     }];
 
     const outputLinks = mapTabsToLinks(tabs, links);
@@ -83,32 +83,32 @@ test('mapTabsToLinks should map tabs to links with IDs same as the IDs of the li
 test('mapTabsToLinks should map a tab to the first link with the same URL when multiple links have the same URL', t => {
     const tabs = [{
         url: "url-a",
-        title: "title-1",
-        faviconUrl: "favicon-1"
+        title: "tab-title-1",
+        faviconUrl: "tab-favicon-1"
     }, {
         url: "url-b",
-        title: "title-2",
-        faviconUrl: "favicon-2"
+        title: "tab-title-2",
+        faviconUrl: "tab-favicon-2"
     }, {
         url: "url-c",
-        title: "title-3",
-        faviconUrl: "favicon-3"
+        title: "tab-title-3",
+        faviconUrl: "tab-favicon-3"
     }];
     const links = [{
         id: "link-1",
         url: "url-a",
-        title: "title-1",
-        faviconUrl: "favicon-1"
+        title: "link-title-1",
+        faviconUrl: "link-favicon-1"
     }, {
         id: "link-2",
         url: "url-x",
-        title: "title-2",
-        faviconUrl: "favicon-2"
+        title: "link-title-2",
+        faviconUrl: "link-favicon-2"
     }, {
         id: "link-3",
         url: "url-a",
-        title: "title-3",
-        faviconUrl: "favicon-3"
+        title: "link-title-3",
+        faviconUrl: "link-favicon-3"
     }];
 
     const outputLinks = mapTabsToLinks(tabs, links);
