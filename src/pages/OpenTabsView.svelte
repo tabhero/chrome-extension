@@ -28,6 +28,10 @@
 
     $: matchedCollection = collections.find(({ name }) => name === collectionName);
 
+    function singularOrPlural(length, singularForm, pluralForm) {
+        return length === 1 ? singularForm : pluralForm;
+    }
+
     function handleSave() {
         dispatch('saveClick', { collectionName });
     }
@@ -73,13 +77,13 @@
                         [true, `"${collectionName}"`],
                         [false, 'has been successfully saved with'],
                         [true, `${tabs.length}`],
-                        [false, 'tabs'],
+                        [false, singularOrPlural(tabs.length, 'tab', 'tabs')],
                     ]}/>
                 {:else if savedState === collectionSavedState.MERGE}
                     <Info content={[
                         [false, 'The'],
                         [true, `${tabs.length}`],
-                        [false, 'current tabs have been successfully added to your existing collection'],
+                        [false, `current ${singularOrPlural(tabs.length, 'tab', 'tabs')} ${singularOrPlural(tabs.length, 'has', 'have')} been successfully added to your existing collection`],
                         [true, `"${matchedCollection.name}"`],
                     ]}/>
                 {/if}
@@ -113,7 +117,7 @@
                 {:else}
                     <Info content={[
                         [false, 'You have'],
-                        [true, `${tabs.length} tab${tabs.length !== 1 ? 's' : ''}`],
+                        [true, `${tabs.length} ${singularOrPlural(tabs.length, 'tab', 'tabs')}`],
                         [false, 'currently open'],
                     ]}/>
                 {/if}

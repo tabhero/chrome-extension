@@ -108,10 +108,38 @@ export const NewCollectionSaved = () => ({
     },
 });
 
+export const NewCollectionSavedWithOneTab = () => ({
+    Component: OpenTabsViewStoryWrapper,
+    props: {
+        tabs: [tabs[0]],
+        collections: collections,
+        collectionName: 'foobar',
+        savedState: collectionSavedState.NEW,
+    },
+    on: {
+        saveClick: action('saveClick'),
+        mergeClick: action('mergeClick'),
+    },
+});
+
 export const NewCollectionMergedToExisting = () => ({
     Component: OpenTabsViewStoryWrapper,
     props: {
         tabs: tabs,
+        collections: collections,
+        collectionName: 'Movies To Watch',
+        savedState: collectionSavedState.MERGE,
+    },
+    on: {
+        saveClick: action('saveClick'),
+        mergeClick: action('mergeClick'),
+    },
+});
+
+export const NewCollectionMergedToExistingWithOneTab = () => ({
+    Component: OpenTabsViewStoryWrapper,
+    props: {
+        tabs: [tabs[0]],
         collections: collections,
         collectionName: 'Movies To Watch',
         savedState: collectionSavedState.MERGE,
