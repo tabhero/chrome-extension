@@ -3,20 +3,23 @@ import { writable, readable, derived } from 'svelte/store';
 import firebase, { firestore } from './services/firebase';
 import { getCurrentTab, registerOnTabUpdate } from './services/chrome';
 import { normalUrl, linkFromTab } from './utils';
+import { mapTabsToLinks } from './resolve/tabLink';
 
 export const currentTabTags = writable([]);
 export const currentTabLink = writable(null);
+
+const toDomain = (documentSnapshot) => {
+    return {
+        ...documentSnapshot.data(),
+        id: documentSnapshot.id,
+    };
+};
 
 const getStoreFromCollection = (collectionName) => {
     return readable([], function start(set) {
         const unsubscribe = firestore.collection(collectionName).onSnapshot({
             next: (snapshot) => {
-                const docs = snapshot.docs.map(doc => {
-                    return {
-                        ...doc.data(),
-                        id: doc.id,
-                    };
-                });
+                const docs = snapshot.docs.map(doc => toDomain(doc));
                 set(docs);
             },
             error: (error) => {
@@ -41,10 +44,7 @@ const listenLinkUpdate = (url, callback) => {
                 return callback(null);
             }
             const doc = snapshot.docs[0];
-            const link = {
-                ...doc.data(),
-                id: doc.id,
-            };
+            const link = toDomain(doc);
             callback(link);
         });
 };
