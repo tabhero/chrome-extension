@@ -12,7 +12,7 @@
 <style>
     .container {
         /* Max width and height of popup: https://stackoverflow.com/a/47570170 */
-        width: 310px;
+        width: 320px;
         height: 540px;
 
         display: flex;
