@@ -81,3 +81,7 @@ The app would not work in development through `npm run dev`, because this will s
 - https://grow.google/jobuxdesign/
 - https://grow.google/jobprojectmanage/
 - https://grow.google/jobdataanalyst/
+
+todo
+make function to map db link to app link
+set the NUMBER OF LINKS in a collection
